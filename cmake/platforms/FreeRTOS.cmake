@@ -1,0 +1,5 @@
+# Config for FreeRTOS.
+
+LIST (APPEND PLATFORM_DEFINITIONS 
+    "-DOS_FREERTOS"
+    )

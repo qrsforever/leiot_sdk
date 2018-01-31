@@ -1,0 +1,5 @@
+# Setup MiniConrol
+
+LIST (APPEND DEVICE_DEFINITIONS 
+    "-DDEV_MINICONTROL"
+    )

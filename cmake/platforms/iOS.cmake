@@ -1,0 +1,5 @@
+# Config for iOS.
+
+LIST (APPEND PLATFORM_DEFINITIONS 
+    "-DOS_IOS"
+    )
