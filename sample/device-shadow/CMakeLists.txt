@@ -1,6 +1,6 @@
 # sample/device-shadow/CMakeLists.txt
 
-SET (LEIOT_SAMPLE_NAME shadow-example) 
+SET (LEIOT_SAMPLE_NAME shadow-example)
 
 LEIOT_GLOBAL_GET (GLOBAL_STATIC_LIBS)
 LEIOT_GLOBAL_GET (GLOBAL_SHARED_LIBS)

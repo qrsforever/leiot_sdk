@@ -172,7 +172,7 @@ int main()
 
     char *msg_buf = (char *)HAL_Malloc(SHADOW_MQTT_MSGLEN);
     char *msg_readbuf = (char *)HAL_Malloc(SHADOW_MQTT_MSGLEN);
-
+    
     demo_device_shadow(msg_buf, msg_readbuf);
 
     HAL_Free(msg_buf);

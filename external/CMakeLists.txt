@@ -32,12 +32,12 @@ IF (LEIOT_ENABLE_MQTT)
     SET (MODULE_MQTT_NAME "MQTTPacketClient")
     SET (MQTT_PACK_DIR "${PROJECT_EXTERNAL_DIR}/${MQTT_GIT_DIR}/MQTTPacket/src")
     ADD_LIBRARY (${MODULE_MQTT_NAME}
-        ${MQTT_PACK_DIR}/MQTTFormat.c 
+        ${MQTT_PACK_DIR}/MQTTFormat.c
         ${MQTT_PACK_DIR}/MQTTPacket.c
-        ${MQTT_PACK_DIR}/MQTTSerializePublish.c 
+        ${MQTT_PACK_DIR}/MQTTSerializePublish.c
         ${MQTT_PACK_DIR}/MQTTDeserializePublish.c
-        ${MQTT_PACK_DIR}/MQTTConnectClient.c 
-        ${MQTT_PACK_DIR}/MQTTSubscribeClient.c 
+        ${MQTT_PACK_DIR}/MQTTConnectClient.c
+        ${MQTT_PACK_DIR}/MQTTSubscribeClient.c
         ${MQTT_PACK_DIR}/MQTTUnsubscribeClient.c
         )
     TARGET_COMPILE_DEFINITIONS(${MODULE_MQTT_NAME} PRIVATE MQTT_CLIENT)

@@ -28,6 +28,7 @@ static int                  iotx_devinfo_inited = 0;
 
 int iotx_device_info_init(void)
 {
+
     if (iotx_devinfo_inited) {
         log_debug("device_info already created, return!");
         return 0;

@@ -70,6 +70,9 @@ int IOT_SetupConnInfo(const char *product_key,
 {
     int                 rc = -1;
 
+    log_debug("SDK Build Version : %s", BUILD_VERSION);
+    log_debug("SDK Build Datetime: %s", BUILD_TIMESTAMP);
+
     if (!info_ptr) {
         log_err("Invalid argument, info_ptr = %p", info_ptr);
         return -1;
