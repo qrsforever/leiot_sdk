@@ -1,0 +1,34 @@
+# external/CMakeLists.txt
+
+INCLUDE (DownloadCodes)
+
+IF (LEIOT_ENABLE_TLS)
+    SET (TLS_GIT_DIR "mbedtls")
+    SET (TLS_GIT_TAG "mbedtls-2.6.0")
+    SET (TLS_GIT_URL "git@github.com:ARMmbed/mbedtls.git")
+    LEIOT_GIT_CLONE (${TLS_GIT_DIR} ${TLS_GIT_TAG} ${TLS_GIT_URL} ${PROJECT_EXTERNAL_DIR})
+
+    SET (MODULE_TLS_NAME "mbedtls")
+    INCLUDE_DIRECTORIES (${PROJECT_EXTERNAL_DIR}/${TLS_GIT_DIR}/include)
+    ADD_SUBDIRECTORY(${PROJECT_EXTERNAL_DIR}/mbedtls/library)
+
+    LIST (APPEND LEIOT_LIBRARIES ${MODULE_TLS_NAME})
+ENDIF (LEIOT_ENABLE_TLS)
+
+IF (LEIOT_ENABLE_MQTT)
+    SET (MQTT_GIT_DIR "paho.mqtt.embedded-c")
+    SET (MQTT_GIT_TAG "v1.1.0")
+    SET (MQTT_GIT_URL "git@github.com:eclipse/paho.mqtt.embedded-c.git")
+    LEIOT_GIT_CLONE ("${MQTT_GIT_DIR}" ${MQTT_GIT_TAG} ${MQTT_GIT_URL} ${PROJECT_EXTERNAL_DIR})
+
+    SET (MODULE_MQTT_NAME "MQTTPacketClient")
+    SET (MQTT_PACK_DIR "${PROJECT_EXTERNAL_DIR}/${MQTT_GIT_DIR}/MQTTPacket/src")
+    INCLUDE_DIRECTORIES (${MQTT_PACK_DIR})
+    ADD_LIBRARY (${MODULE_MQTT_NAME}
+        ${MQTT_PACK_DIR}/MQTTFormat.c ${MQTT_PACK_DIR}/MQTTPacket.c
+        ${MQTT_PACK_DIR}/MQTTSerializePublish.c ${MQTT_PACK_DIR}/MQTTDeserializePublish.c
+        ${MQTT_PACK_DIR}/MQTTConnectClient.c ${MQTT_PACK_DIR}/MQTTSubscribeClient.c ${MQTT_PACK_DIR}/MQTTUnsubscribeClient.c)
+    TARGET_COMPILE_DEFINITIONS(${MODULE_MQTT_NAME} PRIVATE MQTT_CLIENT)
+
+    LIST (APPEND LEIOT_LIBRARIES ${MODULE_MQTT_NAME})
+ENDIF (LEIOT_ENABLE_MQTT)

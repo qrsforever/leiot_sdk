@@ -1,10 +1,11 @@
-# 
+# cmake/CMakeLists.txt
 
 # Debug cmake flag
-SET (LEIOT_CMAKE_ECHO 1)
+SET (LEIOT_CMAKE_DEBUG 1)
 
 INCLUDE (SetEnv)
-INCLUDE (InternalFunctions)
+INCLUDE (InternalFuncs)
+INCLUDE (ConfigPreAndPost)
 
 # Setup Compiling
 SET (CMAKE_C_COMPILER   "${LEIOT_CROSS_PREFIX}gcc")
@@ -20,11 +21,12 @@ SET (CMAKE_RANLIB       "${LEIOT_CROSS_PREFIX}ranlib")
 # Debug
 IF (NOT LEIOT_ENABLE_DEBUG STREQUAL "ON")
     SET (CMAKE_BUILD_TYPE Release CACHE STRING "Set build type" FORCE)  
-ELSE()
+ELSE ()
     SET (CMAKE_BUILD_TYPE Debug CACHE STRING "Set build type" FORCE)  
     ADD_DEFINITIONS ("-DENABLE_DEBUG=1")
-ENDIF()
+ENDIF ()
 
+# Library type
 IF (NOT LEIOT_LIBS_STATIC STREQUAL "OFF")
     OPTION (LEIOT_ENABLE_STATIC "Build libraries static." ON)
 ELSE ()

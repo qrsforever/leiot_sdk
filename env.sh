@@ -7,11 +7,11 @@
 # debug: ON / OFF (default: OFF)
 export ENABLE_DEBUG=ON
 
-# os platform: Android Linux FreeRTOS (default: Linux)
+# os platform: Android/Linux/FreeRTOS (default: Linux)
 export OS_PLATFORM=Linux
 
-# device type: Gateway Subdev MiniControl (default: Subdev)
-export DEVICE_TYPE=Subdev
+# device type: Gateway/Subdev/MiniControl (default: Subdev)
+export DEVICE_TYPE=Gateway
 
 # build libraries type: ON/OFF (default: ON)
 export ENABLE_STATIC=ON
