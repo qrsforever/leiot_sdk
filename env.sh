@@ -15,3 +15,9 @@ export DEVICE_TYPE=Gateway
 
 # build libraries type: ON/OFF (default: ON)
 export ENABLE_STATIC=ON
+
+# Build:
+#   1. mkdir output
+#   2. cd output
+#   3. cmake ..
+#   4. make

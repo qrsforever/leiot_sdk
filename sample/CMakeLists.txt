@@ -1,1 +1,3 @@
-# ADD_SUBDIRECTORY (mqtt)
+# sample/CMakeLists.txt
+
+ADD_SUBDIRECTORY (device-shadow)

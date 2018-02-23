@@ -17,7 +17,8 @@
  */
 
 #include "sdk-impl_internal.h"
-#include "id2_crypto.h"
+/* TODO lidong del */
+/* #include "id2_crypto.h" */
 
 void IOT_OpenLog(const char *ident)
 {

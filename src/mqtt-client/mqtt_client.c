@@ -40,7 +40,7 @@
     #endif
 #endif
 
-// TODO lidong add
+/* TODO lidong add */
 #define MQTT_CPT_RESERVED 0
 #define KEEP_ALIVE_INTERVAL_DEFAULT_MAX 180 
 #define KEEP_ALIVE_INTERVAL_DEFAULT_MIN 60

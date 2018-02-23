@@ -22,5 +22,6 @@ ENDFUNCTION ()
 # Configure post
 FUNCTION (LEIOT_CONFIG_POST file)
     FILE (APPEND ${file} "\n\n#endif // end _LEIOT_CONFIG_H_\n")
+    LEIOT_GLOBAL_DEBUG()
     MESSAGE (STATUS "+++++++++++++++++++ Configure Post +++++++++++++++++++")
 ENDFUNCTION ()

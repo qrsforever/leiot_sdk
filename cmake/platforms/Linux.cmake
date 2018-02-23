@@ -1,9 +1,48 @@
 # Config for Linux.
 
+# DEFS: platform definitions
 LIST (APPEND PLATFORM_DEFINITIONS
     "-DOS_LINUX"
+    "-D_PLATFORM_IS_LINUX_"
+    "-D__UBUNTU_SDK_DEMO__"
+    "-DCONFIG_HTTP_AUTH_TIMEOUT=500"
+    "-DCONFIG_MID_HTTP_TIMEOUT=500"
+    "-DCONFIG_GUIDER_AUTH_TIMEOUT=500"
+    )
+
+# FLAG: compile c flags
+LIST (APPEND PLATFORM_CFLAGS
+    "-Wall"
+    "-Werror"
+    "-g"
+    "-rdynamic"
+    "-ansi"
+    )
+
+# DIR: link directories
+LIST (APPEND PLATFORM_LINKS_DIR 
+    )
+
+# DIR: include directories
+LIST (APPEND PLATFORM_INCLUDE_DIR
+    )
+
+# LIB: dynamic platform libraries
+LIST (APPEND PLATFORM_SHARED_LIBS
+    )
+
+# LIB: static platform libraries
+LIST (APPEND PLATFORM_STATIC_LIBS
     )
 
 # Platform feature configure
-LEIOT_MACRO_OPTION (LEIOT_ENABLE_TLS  "Enable tls" ON)
-LEIOT_MACRO_OPTION (LEIOT_ENABLE_MQTT "Enable mqtt" ON)
+LEIOT_OPTION (LEIOT_ENABLE_TLS  "Enable tls" ON)
+LEIOT_OPTION (LEIOT_ENABLE_MQTT "Enable mqtt" ON)
+
+# Alios:
+# -DCOAP_COMM_ENABLED -DCOAP_DTLS_SUPPORT 
+# -DCONFIG_GUIDER_AUTH_TIMEOUT=500 -DCONFIG_HTTP_AUTH_TIMEOUT=500 
+# -DCONFIG_MID_HTTP_TIMEOUT=500 -DFORCE_SSL_VERIFY -DHTTP_COMM_ENABLED 
+# -DMQTT_COMM_ENABLED -DMQTT_DIRECT -DMQTT_SHADOW -DOTA_ENABLED 
+# -DOTA_SIGNAL_CHANNEL=1 -D_PLATFORM_IS_LINUX_ -D__UBUNTU_SDK_DEMO__ 
+# -Wall -Werror -ansi -g -rdynamic
