@@ -1,4 +1,5 @@
-mqtt_rrpc-example 
+
+lidong@x220:/data/source/Ares/leiot/output$ bin/mqtt_rrpc-example 
 [dbg] IOT_SetupConnInfo(73): SDK Build Version : 1.0.0
 [dbg] IOT_SetupConnInfo(74): SDK Build Datetime: 20180224212043
 [inf] iotx_device_info_init(41): device_info created successfully!
@@ -65,87 +66,101 @@ key usage         : Key Cert Sign, CRL Sign
 [dbg] iotx_mc_cycle(1280): SUBACK
 subscribe success, packet-id=1
 Waiting RRPC from Cloud ...
-Waiting RRPC from Cloud ...
-Waiting RRPC from Cloud ...
+[dbg] iotx_mc_cycle(1288): PUBLISH
+[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00000000
+[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 54
+[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /sys/9RrZXcGctqe/air-1/rrpc/request/967391293124579328
+[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 14 / 966
+[dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
+[dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
+[dbg] iotx_mc_deliver_message(876): topic be matched
+----
+Topic: '/sys/9RrZXcGctqe/air-1/rrpc/request/967391293124579328' (Length: 54)
+Payload: '{aaaaa}{bbbbb}' (Length: 14)
+----
+response msg_id = 967391293124579328
+response topic = /sys/9RrZXcGctqe/air-1/rrpc/response/967391293124579328
+[dbg] MQTTPublish(236): leiot publish topic: /sys/9RrZXcGctqe/air-1/rrpc/response/967391293124579328
 Waiting RRPC from Cloud ...
 Waiting RRPC from Cloud ...
 Waiting RRPC from Cloud ...
 [dbg] iotx_mc_cycle(1288): PUBLISH
-[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00033444
-[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
-[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
-[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 394 / 988
+[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00000000
+[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 54
+[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /sys/9RrZXcGctqe/air-1/rrpc/request/967391306238717952
+[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 14 / 966
 [dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
 [dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
-[dbg] iotx_mc_deliver_message(897): NO matching any topic, call default handle function
-topic message arrived but without any related handle: topic=/shadow/get/9RrZXcGctqe/air-1, topic_msg={"method":"control","payload":{"state":{"desired":{"temperature":1,"window":"open"},"reported":{"temperature":10,"id":"3333","switch":1000}},"metadata":{"desired":{"temperature":{"timestamp":1519478563},"window":{"timestamp":1519478563}},"reported":{"temperature":{"timestamp":1519477603},"id":{"timestamp":1519478563},"switch":{"timestamp":1519477603}}}},"timestamp":1519478563,"version":2931}
+[dbg] iotx_mc_deliver_message(876): topic be matched
+----
+Topic: '/sys/9RrZXcGctqe/air-1/rrpc/request/967391306238717952' (Length: 54)
+Payload: '{aaaaa}{bbbbb}' (Length: 14)
+----
+response msg_id = 967391306238717952
+response topic = /sys/9RrZXcGctqe/air-1/rrpc/response/967391306238717952
+[dbg] MQTTPublish(236): leiot publish topic: /sys/9RrZXcGctqe/air-1/rrpc/response/967391306238717952
 Waiting RRPC from Cloud ...
 Waiting RRPC from Cloud ...
 Waiting RRPC from Cloud ...
 [dbg] iotx_mc_cycle(1288): PUBLISH
-[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00033476
-[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
-[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
-[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 394 / 988
+[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00000000
+[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 54
+[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /sys/9RrZXcGctqe/air-1/rrpc/request/967391321247387648
+[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 14 / 966
 [dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
 [dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
-[dbg] iotx_mc_deliver_message(897): NO matching any topic, call default handle function
-topic message arrived but without any related handle: topic=/shadow/get/9RrZXcGctqe/air-1, topic_msg={"method":"control","payload":{"state":{"desired":{"temperature":2,"window":"open"},"reported":{"temperature":10,"id":"3333","switch":1000}},"metadata":{"desired":{"temperature":{"timestamp":1519478566},"window":{"timestamp":1519478566}},"reported":{"temperature":{"timestamp":1519477603},"id":{"timestamp":1519478566},"switch":{"timestamp":1519477603}}}},"timestamp":1519478566,"version":2932}
+[dbg] iotx_mc_deliver_message(876): topic be matched
+----
+Topic: '/sys/9RrZXcGctqe/air-1/rrpc/request/967391321247387648' (Length: 54)
+Payload: '{aaaaa}{bbbbb}' (Length: 14)
+----
+response msg_id = 967391321247387648
+response topic = /sys/9RrZXcGctqe/air-1/rrpc/response/967391321247387648
+[dbg] MQTTPublish(236): leiot publish topic: /sys/9RrZXcGctqe/air-1/rrpc/response/967391321247387648
 Waiting RRPC from Cloud ...
 Waiting RRPC from Cloud ...
 Waiting RRPC from Cloud ...
 [dbg] iotx_mc_cycle(1288): PUBLISH
-[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00033545
-[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
-[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
-[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 394 / 988
+[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00000000
+[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 54
+[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /sys/9RrZXcGctqe/air-1/rrpc/request/967391336323891200
+[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 14 / 966
 [dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
 [dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
-[dbg] iotx_mc_deliver_message(897): NO matching any topic, call default handle function
-topic message arrived but without any related handle: topic=/shadow/get/9RrZXcGctqe/air-1, topic_msg={"method":"control","payload":{"state":{"desired":{"temperature":3,"window":"open"},"reported":{"temperature":10,"id":"3333","switch":1000}},"metadata":{"desired":{"temperature":{"timestamp":1519478569},"window":{"timestamp":1519478569}},"reported":{"temperature":{"timestamp":1519477603},"id":{"timestamp":1519478569},"switch":{"timestamp":1519477603}}}},"timestamp":1519478569,"version":2933}
-Waiting RRPC from Cloud ...
-Waiting RRPC from Cloud ...
-[dbg] iotx_mc_cycle(1288): PUBLISH
-[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00033666
-[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
-[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
-[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 394 / 988
-[dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
-[dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
-[dbg] iotx_mc_deliver_message(897): NO matching any topic, call default handle function
-topic message arrived but without any related handle: topic=/shadow/get/9RrZXcGctqe/air-1, topic_msg={"method":"control","payload":{"state":{"desired":{"temperature":4,"window":"open"},"reported":{"temperature":10,"id":"3333","switch":1000}},"metadata":{"desired":{"temperature":{"timestamp":1519478572},"window":{"timestamp":1519478572}},"reported":{"temperature":{"timestamp":1519477603},"id":{"timestamp":1519478572},"switch":{"timestamp":1519477603}}}},"timestamp":1519478572,"version":2934}
+[dbg] iotx_mc_deliver_message(876): topic be matched
+----
+Topic: '/sys/9RrZXcGctqe/air-1/rrpc/request/967391336323891200' (Length: 54)
+Payload: '{aaaaa}{bbbbb}' (Length: 14)
+----
+response msg_id = 967391336323891200
+response topic = /sys/9RrZXcGctqe/air-1/rrpc/response/967391336323891200
+[dbg] MQTTPublish(236): leiot publish topic: /sys/9RrZXcGctqe/air-1/rrpc/response/967391336323891200
 Waiting RRPC from Cloud ...
 Waiting RRPC from Cloud ...
 Waiting RRPC from Cloud ...
 [dbg] iotx_mc_cycle(1288): PUBLISH
-[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00033769
-[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
-[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
-[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 394 / 988
+[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00000000
+[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 54
+[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /sys/9RrZXcGctqe/air-1/rrpc/request/967391351497244672
+[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 14 / 966
 [dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
 [dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
-[dbg] iotx_mc_deliver_message(897): NO matching any topic, call default handle function
-topic message arrived but without any related handle: topic=/shadow/get/9RrZXcGctqe/air-1, topic_msg={"method":"control","payload":{"state":{"desired":{"temperature":5,"window":"open"},"reported":{"temperature":10,"id":"3333","switch":1000}},"metadata":{"desired":{"temperature":{"timestamp":1519478576},"window":{"timestamp":1519478576}},"reported":{"temperature":{"timestamp":1519477603},"id":{"timestamp":1519478576},"switch":{"timestamp":1519477603}}}},"timestamp":1519478576,"version":2935}
+[dbg] iotx_mc_deliver_message(876): topic be matched
+----
+Topic: '/sys/9RrZXcGctqe/air-1/rrpc/request/967391351497244672' (Length: 54)
+Payload: '{aaaaa}{bbbbb}' (Length: 14)
+----
+response msg_id = 967391351497244672
+response topic = /sys/9RrZXcGctqe/air-1/rrpc/response/967391351497244672
+[dbg] MQTTPublish(236): leiot publish topic: /sys/9RrZXcGctqe/air-1/rrpc/response/967391351497244672
 Waiting RRPC from Cloud ...
-Waiting RRPC from Cloud ...
-[dbg] iotx_mc_cycle(1288): PUBLISH
-[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00033829
-[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
-[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
-[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 394 / 988
-[dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
-[dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
-[dbg] iotx_mc_deliver_message(897): NO matching any topic, call default handle function
-topic message arrived but without any related handle: topic=/shadow/get/9RrZXcGctqe/air-1, topic_msg={"method":"control","payload":{"state":{"desired":{"temperature":6,"window":"open"},"reported":{"temperature":10,"id":"3333","switch":1000}},"metadata":{"desired":{"temperature":{"timestamp":1519478579},"window":{"timestamp":1519478579}},"reported":{"temperature":{"timestamp":1519477603},"id":{"timestamp":1519478579},"switch":{"timestamp":1519477603}}}},"timestamp":1519478579,"version":2936}
-Waiting RRPC from Cloud ...
-Waiting RRPC from Cloud ...
-Waiting RRPC from Cloud ...
-[dbg] iotx_mc_cycle(1288): PUBLISH
-[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00033885
-[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
-[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
-[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 394 / 988
-[dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
-[dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
-[dbg] iotx_mc_deliver_message(897): NO matching any topic, call default handle function
-topic message arrived but without any related handle: topic=/shadow/get/9RrZXcGctqe/air-1, topic_msg={"method":"control","payload":{"state":{"desired":{"temperature":7,"window":"open"},"reported":{"temperature":10,"id":"3333","switch":1000}},"metadata":{"desired":{"temperature":{"timestamp":1519478582},"window":{"timestamp":1519478582}},"reported":{"temperature":{"timestamp":1519477603},"id":{"timestamp":1519478582},"switch":{"timestamp":1519477603}}}},"timestamp":1519478582,"version":2937}
+
+
+=============================================
+Test.py 
+rrpc success  b'{"MessageId":967391293124579328,"RequestId":"762C332B-0858-414C-B71E-BD7CA298F743","PayloadBase64Byte":"cnJwYyBjbGllbnQgaGFzIHJlY2VpdmVkIG1lc3NhZ2UhCg==","Success":true,"RrpcCode":"SUCCESS"}'
+rrpc success  b'{"MessageId":967391306238717952,"RequestId":"55A6F616-14F1-492E-BAC7-E1C55C85D6A6","PayloadBase64Byte":"cnJwYyBjbGllbnQgaGFzIHJlY2VpdmVkIG1lc3NhZ2UhCg==","Success":true,"RrpcCode":"SUCCESS"}'
+rrpc success  b'{"MessageId":967391321247387648,"RequestId":"E3D8CAD5-5B1D-4F12-BDF3-0CC5D5C36E6D","PayloadBase64Byte":"cnJwYyBjbGllbnQgaGFzIHJlY2VpdmVkIG1lc3NhZ2UhCg==","Success":true,"RrpcCode":"SUCCESS"}'
+rrpc success  b'{"MessageId":967391336323891200,"RequestId":"E4EEAC83-93BB-43C7-BE66-E618A6726E0D","PayloadBase64Byte":"cnJwYyBjbGllbnQgaGFzIHJlY2VpdmVkIG1lc3NhZ2UhCg==","Success":true,"RrpcCode":"SUCCESS"}'
+rrpc success  b'{"MessageId":967391351497244672,"RequestId":"5303E7B6-C14C-439D-93D1-63763409C365","PayloadBase64Byte":"cnJwYyBjbGllbnQgaGFzIHJlY2VpdmVkIG1lc3NhZ2UhCg==","Success":true,"RrpcCode":"SUCCESS"}'
+
