@@ -233,6 +233,8 @@ int MQTTPublish(iotx_mc_client_t *c, const char *topicName, iotx_mqtt_topic_info
         return FAIL_RETURN;
     }
 
+    log_debug("leiot publish topic: %s", topicName);
+
     topic.cstring = (char *)topicName;
     iotx_time_init(&timer);
     utils_time_countdown_ms(&timer, c->request_timeout_ms);
@@ -356,6 +358,7 @@ static int MQTTSubscribe(iotx_mc_client_t *c, const char *topicFilter, iotx_mqtt
     }
 
 
+    log_debug("leiot subscribe topic: %s", topicFilter);
 
     /*
      * NOTE: It prefer to push the element into list and then remove it when send failed,
