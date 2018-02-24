@@ -1,0 +1,405 @@
+./shadow-example 
+[dbg] IOT_SetupConnInfo(73): SDK Build Version : 1.0.0
+[dbg] IOT_SetupConnInfo(74): SDK Build Datetime: 20180224205128
+[inf] iotx_device_info_init(41): device_info created successfully!
+[dbg] iotx_device_info_set(51): start to set device info!
+[dbg] iotx_device_info_set(65): device_info set successfully!
+[dbg] _calc_hmac_signature(57): | source: clientId9RrZXcGctqe.air-1deviceNameair-1productKey9RrZXcGctqetimestamp2524608000000 (83)
+[dbg] _calc_hmac_signature(58): | secret: h9JVOI27YjzvJwhNjKzbzXwuuHQdLFtE (32)
+[dbg] _calc_hmac_signature(61): | method: hmacsha1
+[dbg] _calc_hmac_signature(74): | signature: 470185101986f1e922d95640f9f4671763d12ce1 (40)
+[dbg] guider_print_dev_guider_info(236): ....................................................
+[dbg] guider_print_dev_guider_info(237):           ProductKey : 9RrZXcGctqe
+[dbg] guider_print_dev_guider_info(238):           DeviceName : air-1
+[dbg] guider_print_dev_guider_info(239):             DeviceID : 9RrZXcGctqe.air-1
+[dbg] guider_print_dev_guider_info(240):         DeviceSecret : h9JVOI27YjzvJwhNjKzbzXwuuHQdLFtE
+[dbg] guider_print_dev_guider_info(241): ....................................................
+[dbg] guider_print_dev_guider_info(242):        PartnerID Buf : ,partner_id=example.demo.partner-id
+[dbg] guider_print_dev_guider_info(243):         ModuleID Buf : ,module_id=example.demo.module-id
+[dbg] guider_print_dev_guider_info(244):           Guider URL : 
+[dbg] guider_print_dev_guider_info(246):       Guider SecMode : 2 (TLS + Direct)
+[dbg] guider_print_dev_guider_info(248):     Guider Timestamp : 2524608000000
+[dbg] guider_print_dev_guider_info(249): ....................................................
+[dbg] guider_print_dev_guider_info(250):          Guider Sign : 470185101986f1e922d95640f9f4671763d12ce1
+[dbg] guider_print_dev_guider_info(255): ....................................................
+[dbg] guider_print_conn_info(213): -----------------------------------------
+[dbg] guider_print_conn_info(214):             Host : 9RrZXcGctqe.iot-as-mqtt.cn-shanghai.aliyuncs.com
+[dbg] guider_print_conn_info(215):             Port : 1883
+[dbg] guider_print_conn_info(216):         UserName : air-1&9RrZXcGctqe
+[dbg] guider_print_conn_info(217):         PassWord : 470185101986f1e922d95640f9f4671763d12ce1
+[dbg] guider_print_conn_info(218):         ClientID : 9RrZXcGctqe.air-1|securemode=2,timestamp=2524608000000,signmethod=hmacsha1,gw=0,partner_id=example.demo.partner-id,module_id=example.demo.module-id|
+[dbg] guider_print_conn_info(220):       TLS PubKey : 0x48b8d0 ('-----BEGIN CERTI ...')
+[dbg] guider_print_conn_info(223): -----------------------------------------
+[inf] iotx_mc_init(1709): MQTT init success!
+[inf] _ssl_client_init(176): Loading the CA root certificate ...
+cert. version     : 3
+serial number     : 04:00:00:00:00:01:15:4B:5A:C3:94
+issuer name       : C=BE, O=GlobalSign nv-sa, OU=Root CA, CN=GlobalSign Root CA
+subject name      : C=BE, O=GlobalSign nv-sa, OU=Root CA, CN=GlobalSign Root CA
+issued  on        : 1998-09-01 12:00:00
+expires on        : 2028-01-28 12:00:00
+signed using      : RSA with SHA1
+RSA key size      : 2048 bits
+basic constraints : CA=true
+key usage         : Key Cert Sign, CRL Sign
+[inf] _ssl_parse_crt(144): crt content:451
+[inf] _ssl_client_init(184):  ok (0 skipped)
+[inf] _TLSConnectNetwork(346): Connecting to /9RrZXcGctqe.iot-as-mqtt.cn-shanghai.aliyuncs.com/1883...
+[inf] mbedtls_net_connect_timeout(291): setsockopt SO_SNDTIMEO timeout: 10s
+[inf] _TLSConnectNetwork(359):  ok
+[inf] _TLSConnectNetwork(364):   . Setting up the SSL/TLS structure...
+[inf] _TLSConnectNetwork(374):  ok
+[inf] _TLSConnectNetwork(409): Performing the SSL/TLS handshake...
+[inf] _TLSConnectNetwork(417):  ok
+[inf] _TLSConnectNetwork(421):   . Verifying peer X.509 certificate..
+[inf] _real_confirm(93): certificate verification result: 0x00
+[dbg] iotx_mc_connect(2020): start MQTT connection with parameters: clientid=9RrZXcGctqe.air-1|securemode=2,timestamp=2524608000000,signmethod=hmacsha1,gw=0,partner_id=example.demo.partner-id,module_id=example.demo.module-id|, username=air-1&9RrZXcGctqe, password=470185101986f1e922d95640f9f4671763d12ce1
+[inf] iotx_mc_connect(2040): mqtt connect success!
+[dbg] iotx_mc_report_mid(2263): MID Report: started in MQTT
+[dbg] iotx_mc_report_mid(2280): MID Report: json data = '{"id":"9RrZXcGctqe_air-1_mid","params":{"_sys_device_mid":"example.demo.module-id","_sys_device_pid":"example.demo.partner-id"}}'
+[dbg] iotx_mc_report_mid(2296): MID Report: topic name = '/sys/9RrZXcGctqe/air-1/thing/status/update'
+[dbg] MQTTPublish(236): leiot publish topic: /sys/9RrZXcGctqe/air-1/thing/status/update
+[dbg] iotx_mc_report_mid(2313): MID Report: finished, IOT_MQTT_Publish() = 0
+[dbg] MQTTSubscribe(361): leiot subscribe topic: /shadow/get/9RrZXcGctqe/air-1
+[inf] iotx_mc_subscribe(1399): mqtt subscribe success,topic = /shadow/get/9RrZXcGctqe/air-1!
+[dbg] iotx_mc_cycle(1280): SUBACK
+[inf] iotx_ds_event_handle(300): subscribe success, packet-id=1
+[inf] IOT_Shadow_Construct(373): Sync device data successfully
+[inf] IOT_Shadow_Pull(265): Device Shadow sync start.
+[dbg] IOT_Shadow_Push_Async(175): data(64) = {"method":"get","clientToken":"9RrZXcGctqe.air-1-1","version":1}
+[dbg] iotx_shadow_update_wait_ack_list_add(76): Add update ACK list
+[dbg] iotx_ds_common_publish2update(396): publish msg: len=64, str={"method":"get","clientToken":"9RrZXcGctqe.air-1-1","version":1}
+[dbg] MQTTPublish(236): leiot publish topic: /shadow/update/9RrZXcGctqe/air-1
+[dbg] iotx_mc_cycle(1271): PUBACK
+[dbg] iotx_mc_cycle(1288): PUBLISH
+[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00020500
+[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
+[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 321 / 988
+[dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
+[dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
+[dbg] iotx_mc_deliver_message(876): topic be matched
+[dbg] iotx_shadow_callback_get(63): topic=/shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_shadow_callback_get(64): data of topic={"method":"reply","payload":{"status":"success","state":{"reported":{"temperature":"8","id":"3333","switch":"1000"}},"metadata":{"reported":{"temperature":{"timestamp":1519476807},"id":{"timestamp":1519476806},"switch":{"timestamp":1519476807}}}},"timestamp":1519476830,"version":2815,"clientToken":"9RrZXcGctqe.air-1-1"}
+[inf] iotx_ds_common_update_time(252): update system time
+[inf] iotx_ds_common_update_version(320): update shadow version
+[dbg] iotx_shadow_callback_get(96): receive 'reply' method
+[dbg] iotx_ds_update_wait_ack_list_handle_response(139): ppayload = {"status":"success","state":{"reported":{"temperature":"8","id":"3333","switch":"1000"}},"metadata":{"reported":{"temperature":{"timestamp":1519476807},"id":{"timestamp":1519476806},"switch":{"timestamp":1519476807}}}}
+[dbg] iotx_ds_update_wait_ack_list_handle_response(149): token=9RrZXcGctqe.air-1-1
+_device_shadow_cb_light|056 :: ----
+_device_shadow_cb_light|057 :: Attrbute Name: 'switch'
+_device_shadow_cb_light|058 :: Attrbute Value: 1000
+_device_shadow_cb_light|059 :: ----
+[dbg] iotx_ds_common_publish2update(396): publish msg: len=97, str={"method":"update","state":{"desired":"null"},"clientToken":"9RrZXcGctqe.air-1-3","version":2816}
+[dbg] MQTTPublish(236): leiot publish topic: /shadow/update/9RrZXcGctqe/air-1
+[dbg] iotx_update_ack_cb(203): ack_code=200
+[dbg] iotx_update_ack_cb(208): ack_msg is NULL
+[dbg] iotx_shadow_callback_get(107): End of method handle
+[dbg] iotx_mc_cycle(1271): PUBACK
+[dbg] iotx_mc_cycle(1288): PUBLISH
+[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00020501
+[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
+[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 123 / 988
+[dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
+[dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
+[dbg] iotx_mc_deliver_message(876): topic be matched
+[dbg] iotx_shadow_callback_get(63): topic=/shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_shadow_callback_get(64): data of topic={"method":"reply","payload":{"status":"success","version":2816},"clientToken":"9RrZXcGctqe.air-1-3","timestamp":1519476830}
+[inf] iotx_ds_common_update_time(252): update system time
+[inf] iotx_ds_common_update_version(320): update shadow version
+[dbg] iotx_shadow_callback_get(96): receive 'reply' method
+[dbg] iotx_ds_update_wait_ack_list_handle_response(139): ppayload = {"status":"success","version":2816}
+[wrn] iotx_ds_update_wait_ack_list_handle_response(207): Not match any wait element in list.
+[dbg] iotx_shadow_callback_get(107): End of method handle
+[inf] IOT_Shadow_Push(244): update success.
+[inf] IOT_Shadow_Pull(278): Device Shadow sync success.
+[dbg] IOT_Shadow_Push_Async(175): data(123) = {"method":"update","state":{"reported":{"temperature":8,"switch":1000}},"clientToken":"9RrZXcGctqe.air-1-5","version":2818}
+[dbg] iotx_shadow_update_wait_ack_list_add(76): Add update ACK list
+[dbg] iotx_ds_common_publish2update(396): publish msg: len=123, str={"method":"update","state":{"reported":{"temperature":8,"switch":1000}},"clientToken":"9RrZXcGctqe.air-1-5","version":2818}
+[dbg] MQTTPublish(236): leiot publish topic: /shadow/update/9RrZXcGctqe/air-1
+[dbg] iotx_mc_cycle(1271): PUBACK
+[dbg] iotx_mc_cycle(1288): PUBLISH
+[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00020503
+[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
+[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 123 / 988
+[dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
+[dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
+[dbg] iotx_mc_deliver_message(876): topic be matched
+[dbg] iotx_shadow_callback_get(63): topic=/shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_shadow_callback_get(64): data of topic={"method":"reply","payload":{"status":"success","version":2818},"clientToken":"9RrZXcGctqe.air-1-5","timestamp":1519476831}
+[inf] iotx_ds_common_update_time(252): update system time
+[inf] iotx_ds_common_update_version(320): update shadow version
+[dbg] iotx_shadow_callback_get(96): receive 'reply' method
+[dbg] iotx_ds_update_wait_ack_list_handle_response(139): ppayload = {"status":"success","version":2818}
+[dbg] iotx_ds_update_wait_ack_list_handle_response(149): token=9RrZXcGctqe.air-1-5
+[dbg] iotx_update_ack_cb(203): ack_code=200
+[dbg] iotx_update_ack_cb(208): ack_msg is NULL
+[dbg] iotx_shadow_callback_get(107): End of method handle
+[inf] IOT_Shadow_Push(244): update success.
+[dbg] IOT_Shadow_Push_Async(175): data(123) = {"method":"update","state":{"reported":{"temperature":8,"switch":1000}},"clientToken":"9RrZXcGctqe.air-1-7","version":2820}
+[dbg] iotx_shadow_update_wait_ack_list_add(76): Add update ACK list
+[dbg] iotx_ds_common_publish2update(396): publish msg: len=123, str={"method":"update","state":{"reported":{"temperature":8,"switch":1000}},"clientToken":"9RrZXcGctqe.air-1-7","version":2820}
+[dbg] MQTTPublish(236): leiot publish topic: /shadow/update/9RrZXcGctqe/air-1
+[dbg] iotx_mc_cycle(1288): PUBLISH
+[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00020505
+[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
+[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 393 / 988
+[dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
+[dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
+[dbg] iotx_mc_deliver_message(876): topic be matched
+[dbg] iotx_shadow_callback_get(63): topic=/shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_shadow_callback_get(64): data of topic={"method":"control","payload":{"state":{"desired":{"temperature":1,"window":"open"},"reported":{"temperature":8,"id":"3333","switch":1000}},"metadata":{"desired":{"temperature":{"timestamp":1519476832},"window":{"timestamp":1519476832}},"reported":{"temperature":{"timestamp":1519476831},"id":{"timestamp":1519476832},"switch":{"timestamp":1519476831}}}},"timestamp":1519476832,"version":2819}
+[inf] iotx_ds_common_update_time(252): update system time
+[inf] iotx_ds_common_update_version(320): update shadow version
+[dbg] iotx_shadow_callback_get(87): receive 'control' method
+[dbg] iotx_ds_common_publish2update(396): publish msg: len=97, str={"method":"update","state":{"desired":"null"},"clientToken":"9RrZXcGctqe.air-1-9","version":2822}
+[dbg] MQTTPublish(236): leiot publish topic: /shadow/update/9RrZXcGctqe/air-1
+[dbg] iotx_shadow_callback_get(107): End of method handle
+[dbg] iotx_mc_cycle(1271): PUBACK
+[dbg] iotx_mc_cycle(1288): PUBLISH
+[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00020507
+[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
+[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 123 / 988
+[dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
+[dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
+[dbg] iotx_mc_deliver_message(876): topic be matched
+[dbg] iotx_shadow_callback_get(63): topic=/shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_shadow_callback_get(64): data of topic={"method":"reply","payload":{"status":"success","version":2820},"clientToken":"9RrZXcGctqe.air-1-7","timestamp":1519476833}
+[inf] iotx_ds_common_update_time(252): update system time
+[inf] iotx_ds_common_update_version(320): update shadow version
+[dbg] iotx_shadow_callback_get(96): receive 'reply' method
+[dbg] iotx_ds_update_wait_ack_list_handle_response(139): ppayload = {"status":"success","version":2820}
+[dbg] iotx_ds_update_wait_ack_list_handle_response(149): token=9RrZXcGctqe.air-1-7
+[dbg] iotx_update_ack_cb(203): ack_code=200
+[dbg] iotx_update_ack_cb(208): ack_msg is NULL
+[dbg] iotx_shadow_callback_get(107): End of method handle
+[dbg] iotx_mc_cycle(1271): PUBACK
+[dbg] iotx_mc_cycle(1288): PUBLISH
+[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00020508
+[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
+[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 123 / 988
+[dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
+[dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
+[dbg] iotx_mc_deliver_message(876): topic be matched
+[dbg] iotx_shadow_callback_get(63): topic=/shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_shadow_callback_get(64): data of topic={"method":"reply","payload":{"status":"success","version":2822},"clientToken":"9RrZXcGctqe.air-1-9","timestamp":1519476833}
+[inf] iotx_ds_common_update_time(252): update system time
+[inf] iotx_ds_common_update_version(320): update shadow version
+[dbg] iotx_shadow_callback_get(96): receive 'reply' method
+[dbg] iotx_ds_update_wait_ack_list_handle_response(139): ppayload = {"status":"success","version":2822}
+[wrn] iotx_ds_update_wait_ack_list_handle_response(207): Not match any wait element in list.
+[dbg] iotx_shadow_callback_get(107): End of method handle
+[inf] IOT_Shadow_Push(244): update success.
+[dbg] IOT_Shadow_Push_Async(175): data(124) = {"method":"update","state":{"reported":{"temperature":1,"switch":1000}},"clientToken":"9RrZXcGctqe.air-1-11","version":2824}
+[dbg] iotx_shadow_update_wait_ack_list_add(76): Add update ACK list
+[dbg] iotx_ds_common_publish2update(396): publish msg: len=124, str={"method":"update","state":{"reported":{"temperature":1,"switch":1000}},"clientToken":"9RrZXcGctqe.air-1-11","version":2824}
+[dbg] MQTTPublish(236): leiot publish topic: /shadow/update/9RrZXcGctqe/air-1
+[dbg] iotx_mc_cycle(1288): PUBLISH
+[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00020512
+[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
+[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 397 / 988
+[dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
+[dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
+[dbg] iotx_mc_deliver_message(876): topic be matched
+[dbg] iotx_shadow_callback_get(63): topic=/shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_shadow_callback_get(64): data of topic={"method":"control","payload":{"state":{"desired":{"temperature":2,"window":"open"},"reported":{"temperature":"8","id":"3333","switch":"1000"}},"metadata":{"desired":{"temperature":{"timestamp":1519476835},"window":{"timestamp":1519476835}},"reported":{"temperature":{"timestamp":1519476833},"id":{"timestamp":1519476835},"switch":{"timestamp":1519476833}}}},"timestamp":1519476835,"version":2823}
+[inf] iotx_ds_common_update_time(252): update system time
+[inf] iotx_ds_common_update_version(320): update shadow version
+[dbg] iotx_shadow_callback_get(87): receive 'control' method
+[dbg] iotx_ds_common_publish2update(396): publish msg: len=98, str={"method":"update","state":{"desired":"null"},"clientToken":"9RrZXcGctqe.air-1-13","version":2826}
+[dbg] MQTTPublish(236): leiot publish topic: /shadow/update/9RrZXcGctqe/air-1
+[dbg] iotx_shadow_callback_get(107): End of method handle
+[dbg] iotx_mc_cycle(1271): PUBACK
+[dbg] iotx_mc_cycle(1288): PUBLISH
+[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00020513
+[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
+[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 124 / 988
+[dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
+[dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
+[dbg] iotx_mc_deliver_message(876): topic be matched
+[dbg] iotx_shadow_callback_get(63): topic=/shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_shadow_callback_get(64): data of topic={"method":"reply","payload":{"status":"success","version":2824},"clientToken":"9RrZXcGctqe.air-1-11","timestamp":1519476835}
+[inf] iotx_ds_common_update_time(252): update system time
+[inf] iotx_ds_common_update_version(320): update shadow version
+[dbg] iotx_shadow_callback_get(96): receive 'reply' method
+[dbg] iotx_ds_update_wait_ack_list_handle_response(139): ppayload = {"status":"success","version":2824}
+[dbg] iotx_ds_update_wait_ack_list_handle_response(149): token=9RrZXcGctqe.air-1-11
+[dbg] iotx_update_ack_cb(203): ack_code=200
+[dbg] iotx_update_ack_cb(208): ack_msg is NULL
+[dbg] iotx_shadow_callback_get(107): End of method handle
+[dbg] iotx_mc_cycle(1271): PUBACK
+[dbg] iotx_mc_cycle(1288): PUBLISH
+[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00020514
+[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
+[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 124 / 988
+[dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
+[dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
+[dbg] iotx_mc_deliver_message(876): topic be matched
+[dbg] iotx_shadow_callback_get(63): topic=/shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_shadow_callback_get(64): data of topic={"method":"reply","payload":{"status":"success","version":2826},"clientToken":"9RrZXcGctqe.air-1-13","timestamp":1519476836}
+[inf] iotx_ds_common_update_time(252): update system time
+[inf] iotx_ds_common_update_version(320): update shadow version
+[dbg] iotx_shadow_callback_get(96): receive 'reply' method
+[dbg] iotx_ds_update_wait_ack_list_handle_response(139): ppayload = {"status":"success","version":2826}
+[wrn] iotx_ds_update_wait_ack_list_handle_response(207): Not match any wait element in list.
+[dbg] iotx_shadow_callback_get(107): End of method handle
+[inf] IOT_Shadow_Push(244): update success.
+[dbg] IOT_Shadow_Push_Async(175): data(124) = {"method":"update","state":{"reported":{"temperature":2,"switch":1000}},"clientToken":"9RrZXcGctqe.air-1-15","version":2828}
+[dbg] iotx_shadow_update_wait_ack_list_add(76): Add update ACK list
+[dbg] iotx_ds_common_publish2update(396): publish msg: len=124, str={"method":"update","state":{"reported":{"temperature":2,"switch":1000}},"clientToken":"9RrZXcGctqe.air-1-15","version":2828}
+[dbg] MQTTPublish(236): leiot publish topic: /shadow/update/9RrZXcGctqe/air-1
+[dbg] iotx_mc_cycle(1271): PUBACK
+[dbg] iotx_mc_cycle(1288): PUBLISH
+[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00020518
+[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
+[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 124 / 988
+[dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
+[dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
+[dbg] iotx_mc_deliver_message(876): topic be matched
+[dbg] iotx_shadow_callback_get(63): topic=/shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_shadow_callback_get(64): data of topic={"method":"reply","payload":{"status":"success","version":2828},"clientToken":"9RrZXcGctqe.air-1-15","timestamp":1519476838}
+[inf] iotx_ds_common_update_time(252): update system time
+[inf] iotx_ds_common_update_version(320): update shadow version
+[dbg] iotx_shadow_callback_get(96): receive 'reply' method
+[dbg] iotx_ds_update_wait_ack_list_handle_response(139): ppayload = {"status":"success","version":2828}
+[dbg] iotx_ds_update_wait_ack_list_handle_response(149): token=9RrZXcGctqe.air-1-15
+[dbg] iotx_update_ack_cb(203): ack_code=200
+[dbg] iotx_update_ack_cb(208): ack_msg is NULL
+[dbg] iotx_shadow_callback_get(107): End of method handle
+[inf] IOT_Shadow_Push(244): update success.
+[dbg] IOT_Shadow_Push_Async(175): data(124) = {"method":"update","state":{"reported":{"temperature":2,"switch":1000}},"clientToken":"9RrZXcGctqe.air-1-17","version":2830}
+[dbg] iotx_shadow_update_wait_ack_list_add(76): Add update ACK list
+[dbg] iotx_ds_common_publish2update(396): publish msg: len=124, str={"method":"update","state":{"reported":{"temperature":2,"switch":1000}},"clientToken":"9RrZXcGctqe.air-1-17","version":2830}
+[dbg] MQTTPublish(236): leiot publish topic: /shadow/update/9RrZXcGctqe/air-1
+[dbg] iotx_mc_cycle(1288): PUBLISH
+[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00020520
+[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
+[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 393 / 988
+[dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
+[dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
+[dbg] iotx_mc_deliver_message(876): topic be matched
+[dbg] iotx_shadow_callback_get(63): topic=/shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_shadow_callback_get(64): data of topic={"method":"control","payload":{"state":{"desired":{"temperature":3,"window":"open"},"reported":{"temperature":2,"id":"3333","switch":1000}},"metadata":{"desired":{"temperature":{"timestamp":1519476839},"window":{"timestamp":1519476839}},"reported":{"temperature":{"timestamp":1519476838},"id":{"timestamp":1519476839},"switch":{"timestamp":1519476838}}}},"timestamp":1519476839,"version":2829}
+[inf] iotx_ds_common_update_time(252): update system time
+[inf] iotx_ds_common_update_version(320): update shadow version
+[dbg] iotx_shadow_callback_get(87): receive 'control' method
+[dbg] iotx_ds_common_publish2update(396): publish msg: len=98, str={"method":"update","state":{"desired":"null"},"clientToken":"9RrZXcGctqe.air-1-19","version":2832}
+[dbg] MQTTPublish(236): leiot publish topic: /shadow/update/9RrZXcGctqe/air-1
+[dbg] iotx_shadow_callback_get(107): End of method handle
+[dbg] iotx_mc_cycle(1271): PUBACK
+[dbg] iotx_mc_cycle(1288): PUBLISH
+[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00020525
+[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
+[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 124 / 988
+[dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
+[dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
+[dbg] iotx_mc_deliver_message(876): topic be matched
+[dbg] iotx_shadow_callback_get(63): topic=/shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_shadow_callback_get(64): data of topic={"method":"reply","payload":{"status":"success","version":2830},"clientToken":"9RrZXcGctqe.air-1-17","timestamp":1519476840}
+[inf] iotx_ds_common_update_time(252): update system time
+[inf] iotx_ds_common_update_version(320): update shadow version
+[dbg] iotx_shadow_callback_get(96): receive 'reply' method
+[dbg] iotx_ds_update_wait_ack_list_handle_response(139): ppayload = {"status":"success","version":2830}
+[dbg] iotx_ds_update_wait_ack_list_handle_response(149): token=9RrZXcGctqe.air-1-17
+[dbg] iotx_update_ack_cb(203): ack_code=200
+[dbg] iotx_update_ack_cb(208): ack_msg is NULL
+[dbg] iotx_shadow_callback_get(107): End of method handle
+[dbg] iotx_mc_cycle(1271): PUBACK
+[dbg] iotx_mc_cycle(1288): PUBLISH
+[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00020526
+[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
+[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 124 / 988
+[dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
+[dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
+[dbg] iotx_mc_deliver_message(876): topic be matched
+[dbg] iotx_shadow_callback_get(63): topic=/shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_shadow_callback_get(64): data of topic={"method":"reply","payload":{"status":"success","version":2832},"clientToken":"9RrZXcGctqe.air-1-19","timestamp":1519476840}
+[inf] iotx_ds_common_update_time(252): update system time
+[inf] iotx_ds_common_update_version(320): update shadow version
+[dbg] iotx_shadow_callback_get(96): receive 'reply' method
+[dbg] iotx_ds_update_wait_ack_list_handle_response(139): ppayload = {"status":"success","version":2832}
+[wrn] iotx_ds_update_wait_ack_list_handle_response(207): Not match any wait element in list.
+[dbg] iotx_shadow_callback_get(107): End of method handle
+[inf] IOT_Shadow_Push(244): update success.
+[dbg] IOT_Shadow_Push_Async(175): data(124) = {"method":"update","state":{"reported":{"temperature":3,"switch":1000}},"clientToken":"9RrZXcGctqe.air-1-21","version":2834}
+[dbg] iotx_shadow_update_wait_ack_list_add(76): Add update ACK list
+[dbg] iotx_ds_common_publish2update(396): publish msg: len=124, str={"method":"update","state":{"reported":{"temperature":3,"switch":1000}},"clientToken":"9RrZXcGctqe.air-1-21","version":2834}
+[dbg] MQTTPublish(236): leiot publish topic: /shadow/update/9RrZXcGctqe/air-1
+[dbg] iotx_mc_cycle(1288): PUBLISH
+[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00020534
+[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
+[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 397 / 988
+[dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
+[dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
+[dbg] iotx_mc_deliver_message(876): topic be matched
+[dbg] iotx_shadow_callback_get(63): topic=/shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_shadow_callback_get(64): data of topic={"method":"control","payload":{"state":{"desired":{"temperature":4,"window":"open"},"reported":{"temperature":"2","id":"3333","switch":"1000"}},"metadata":{"desired":{"temperature":{"timestamp":1519476842},"window":{"timestamp":1519476842}},"reported":{"temperature":{"timestamp":1519476840},"id":{"timestamp":1519476842},"switch":{"timestamp":1519476840}}}},"timestamp":1519476842,"version":2833}
+[inf] iotx_ds_common_update_time(252): update system time
+[inf] iotx_ds_common_update_version(320): update shadow version
+[dbg] iotx_shadow_callback_get(87): receive 'control' method
+[dbg] iotx_ds_common_publish2update(396): publish msg: len=98, str={"method":"update","state":{"desired":"null"},"clientToken":"9RrZXcGctqe.air-1-23","version":2836}
+[dbg] MQTTPublish(236): leiot publish topic: /shadow/update/9RrZXcGctqe/air-1
+[dbg] iotx_shadow_callback_get(107): End of method handle
+[dbg] iotx_mc_cycle(1271): PUBACK
+[dbg] iotx_mc_cycle(1288): PUBLISH
+[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00020536
+[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
+[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 124 / 988
+[dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
+[dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
+[dbg] iotx_mc_deliver_message(876): topic be matched
+[dbg] iotx_shadow_callback_get(63): topic=/shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_shadow_callback_get(64): data of topic={"method":"reply","payload":{"status":"success","version":2834},"clientToken":"9RrZXcGctqe.air-1-21","timestamp":1519476842}
+[inf] iotx_ds_common_update_time(252): update system time
+[inf] iotx_ds_common_update_version(320): update shadow version
+[dbg] iotx_shadow_callback_get(96): receive 'reply' method
+[dbg] iotx_ds_update_wait_ack_list_handle_response(139): ppayload = {"status":"success","version":2834}
+[dbg] iotx_ds_update_wait_ack_list_handle_response(149): token=9RrZXcGctqe.air-1-21
+[dbg] iotx_update_ack_cb(203): ack_code=200
+[dbg] iotx_update_ack_cb(208): ack_msg is NULL
+[dbg] iotx_shadow_callback_get(107): End of method handle
+[dbg] iotx_mc_cycle(1271): PUBACK
+[dbg] iotx_mc_cycle(1288): PUBLISH
+[dbg] iotx_mc_handle_recv_PUBLISH(1101):         Packet Ident : 00020537
+[dbg] iotx_mc_handle_recv_PUBLISH(1102):         Topic Length : 29
+[dbg] iotx_mc_handle_recv_PUBLISH(1106):           Topic Name : /shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_mc_handle_recv_PUBLISH(1109):     Payload Len/Room : 124 / 988
+[dbg] iotx_mc_handle_recv_PUBLISH(1110):       Receive Buflen : 1024
+[dbg] iotx_mc_handle_recv_PUBLISH(1121): delivering msg ...
+[dbg] iotx_mc_deliver_message(876): topic be matched
+[dbg] iotx_shadow_callback_get(63): topic=/shadow/get/9RrZXcGctqe/air-1
+[dbg] iotx_shadow_callback_get(64): data of topic={"method":"reply","payload":{"status":"success","version":2836},"clientToken":"9RrZXcGctqe.air-1-23","timestamp":1519476842}
+[inf] iotx_ds_common_update_time(252): update system time
+[inf] iotx_ds_common_update_version(320): update shadow version
+[dbg] iotx_shadow_callback_get(96): receive 'reply' method
+[dbg] iotx_ds_update_wait_ack_list_handle_response(139): ppayload = {"status":"success","version":2836}
+[wrn] iotx_ds_update_wait_ack_list_handle_response(207): Not match any wait element in list.
+[dbg] iotx_shadow_callback_get(107): End of method handle
+[inf] IOT_Shadow_Push(244): update success.
+
+===============================================================================================================================================================================
+
+./Test.py 
+getDeviceShadow success b'{"ShadowMessage":"{\\"state\\":{\\"reported\\":{\\"temperature\\":8,\\"switch\\":1000,\\"id\\":\\"3333\\"}},\\"metadata\\":{\\"reported\\":{\\"temperature\\":{\\"timestamp\\":1519476831},\\"switch\\":{\\"timestamp\\":1519476831},\\"id\\":{\\"timestamp\\":1519476806}}},\\"timestamp\\":1519476831,\\"version\\":2818}","RequestId":"09A22080-9818-4F4A-9AB4-09E812149514","Success":true}'
+updateDeviceShadow success 
+getDeviceShadow success b'{"ShadowMessage":"{\\"state\\":{\\"reported\\":{\\"temperature\\":\\"8\\",\\"id\\":\\"3333\\",\\"switch\\":\\"1000\\"}},\\"metadata\\":{\\"reported\\":{\\"temperature\\":{\\"timestamp\\":1519476833},\\"id\\":{\\"timestamp\\":1519476832},\\"switch\\":{\\"timestamp\\":1519476833}}},\\"timestamp\\":1519476833,\\"version\\":2822}","RequestId":"0420112A-E3ED-414C-89E4-D3BECA1C4C92","Success":true}'
+updateDeviceShadow success 
+getDeviceShadow success b'{"ShadowMessage":"{\\"state\\":{\\"reported\\":{\\"temperature\\":2,\\"switch\\":1000,\\"id\\":\\"3333\\"}},\\"metadata\\":{\\"reported\\":{\\"temperature\\":{\\"timestamp\\":1519476838},\\"switch\\":{\\"timestamp\\":1519476838},\\"id\\":{\\"timestamp\\":1519476835}}},\\"timestamp\\":1519476838,\\"version\\":2828}","RequestId":"3FF1B672-CECE-4B31-AA2B-2811229FEB37","Success":true}'
+updateDeviceShadow success 
+getDeviceShadow success b'{"ShadowMessage":"{\\"state\\":{\\"reported\\":{\\"temperature\\":\\"2\\",\\"id\\":\\"3333\\",\\"switch\\":\\"1000\\"}},\\"metadata\\":{\\"reported\\":{\\"temperature\\":{\\"timestamp\\":1519476840},\\"id\\":{\\"timestamp\\":1519476839},\\"switch\\":{\\"timestamp\\":1519476840}}},\\"timestamp\\":1519476840,\\"version\\":2832}","RequestId":"CA7E299B-6A0B-4137-9937-5B70BEA733EB","Success":true}'
+updateDeviceShadow success 
+
