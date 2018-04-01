@@ -28,6 +28,11 @@ extern "C" {
 
 #define MQTT_SDK_VERSION    "2.0"
 
+#ifdef ENABLE_TENCENT_CLOUD
+#include <time.h>
+const char* iotx_get_next_conn_id();
+#endif
+
 int     iotx_device_info_init(void);
 
 int     iotx_device_info_set(

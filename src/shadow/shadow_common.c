@@ -56,6 +56,11 @@ iotx_err_t iotx_ds_common_format_init(iotx_shadow_pt pshadow,
                                       const char *method,
                                       const char *head_str)
 {
+#ifndef ENABLE_TENCENT_CLOUD
+#define DOC_METHOD_NAME "method"
+#else
+#define DOC_METHOD_NAME "type"
+#endif
     int ret;
     uint32_t size_free_space;
     memset(pformat, 0, sizeof(format_data_t));
@@ -72,7 +77,7 @@ iotx_err_t iotx_ds_common_format_init(iotx_shadow_pt pshadow,
     ret = HAL_Snprintf(pformat->buf,
                        size_free_space,
                        "{\"%s\":\"%s\"",
-                       "method",
+                       DOC_METHOD_NAME,
                        method);
 
     CHECK_SNPRINTF_RET(ret, size_free_space);
@@ -326,9 +331,12 @@ uint32_t iotx_ds_common_get_version(iotx_shadow_pt pshadow)
 {
     uint32_t ver;
     HAL_MutexLock(pshadow->mutex);
+#ifndef ENABLE_TENCENT_CLOUD
     ++pshadow->inner_data.version;
+#endif
     ver = pshadow->inner_data.version;
-    ++pshadow->inner_data.version;
+    /* TODO leiot */
+    /* ++pshadow->inner_data.version; */
     HAL_MutexUnlock(pshadow->mutex);
     return ver;
 }
@@ -340,12 +348,13 @@ uint32_t iotx_ds_common_get_tokennum(iotx_shadow_pt pshadow)
     HAL_MutexLock(pshadow->mutex);
     ++pshadow->inner_data.token_num;
     ver = pshadow->inner_data.token_num;
-    ++pshadow->inner_data.token_num;
+    /* TODO leiot */
+    /* ++pshadow->inner_data.token_num; */
     HAL_MutexUnlock(pshadow->mutex);
     return ver;
 }
 
-
+#ifndef ENABLE_TENCENT_CLOUD
 char *iotx_ds_common_generate_topic_name(iotx_shadow_pt pshadow, const char *topic)
 {
 #define SHADOW_TOPIC_FMT      "/shadow/%s/%s/%s"
@@ -355,7 +364,10 @@ char *iotx_ds_common_generate_topic_name(iotx_shadow_pt pshadow, const char *top
     char *topic_full = NULL;
     iotx_device_info_pt pdevice_info = iotx_device_info_get();
 
-    len = SHADOW_TOPIC_LEN + sizeof(SHADOW_TOPIC_FMT);
+    if (NULL == topic)
+        return NULL;
+
+    len = SHADOW_TOPIC_LEN + sizeof(SHADOW_TOPIC_FMT) + strlen(topic);
 
     topic_full = LITE_malloc(len + 1);
     if (NULL == topic_full) {
@@ -378,29 +390,90 @@ char *iotx_ds_common_generate_topic_name(iotx_shadow_pt pshadow, const char *top
 
     return topic_full;
 }
-
-
-int iotx_ds_common_publish2update(iotx_shadow_pt pshadow, char *data, uint32_t data_len)
+#else
+char *iotx_ds_common_generate_topic_name(iotx_shadow_pt pshadow, const char *topic)
 {
-    iotx_mqtt_topic_info_t topic_msg;
+#define SHADOW_TOPIC_LEN      (PRODUCT_KEY_LEN + DEVICE_NAME_LEN)
 
-    /* check if topic name have been generated or not */
-    if (NULL == pshadow->inner_data.ptopic_update) {
-        /* Have NOT update topic name, generate it. */
-        pshadow->inner_data.ptopic_update = iotx_ds_common_generate_topic_name(pshadow, "update");
-        if (NULL == pshadow->inner_data.ptopic_update) {
-            return FAIL_RETURN;
-        }
+    int len, ret;
+    char *topic_full = NULL;
+    iotx_device_info_pt pdevice_info = iotx_device_info_get();
+
+    if (NULL == topic)
+        return NULL;
+
+    char tmp_topic[32] = { 0 };
+    if (0 == strcmp("get", topic)) {
+        strcpy(tmp_topic, "$shadow/operation/result");
+        len = SHADOW_TOPIC_LEN + strlen(tmp_topic) + 2;
+    } else if ( 0 == strcmp("update", topic)) {
+        strcpy(tmp_topic, "$shadow/operation");
+        len = SHADOW_TOPIC_LEN + strlen(tmp_topic) + 2;
     }
 
-    log_debug("publish msg: len=%d, str=%s", data_len, data);
+    topic_full = LITE_malloc(len + 1);
+    if (NULL == topic_full) {
+        log_err("Not enough memory");
+        return NULL;
+    }
 
-    topic_msg.qos = IOTX_MQTT_QOS1;
-    topic_msg.retain = 0;
-    topic_msg.dup = 0;
-    topic_msg.payload = (void *)data;
-    topic_msg.payload_len = data_len;
-    topic_msg.packet_id = 0;
+    ret = HAL_Snprintf(topic_full,
+                       len,
+                       "%s/%s/%s",
+                       tmp_topic,
+                       pdevice_info->product_key,
+                       pdevice_info->device_name);
+    if (ret < 0) {
+        LITE_free(topic_full);
+        return NULL;
+    }
 
-    return IOT_MQTT_Publish(pshadow->mqtt, pshadow->inner_data.ptopic_update, &topic_msg);
+    LITE_ASSERT(ret < len);
+
+    return topic_full;
+}
+#endif
+
+char *iotx_ds_common_generate_message_topic_name(iotx_shadow_pt pshadow, const char *topic)
+{
+#define SHADOW_MESSAGE_TOPIC_LEN      (PRODUCT_KEY_LEN + DEVICE_NAME_LEN)
+
+    int len, ret;
+    char *topic_full = NULL;
+    iotx_device_info_pt pdevice_info = iotx_device_info_get();
+
+    if (NULL == topic)
+        return NULL;
+
+    len = SHADOW_MESSAGE_TOPIC_LEN + strlen(topic) + 3;
+
+    topic_full = LITE_malloc(len + 1);
+    if (NULL == topic_full) {
+        log_err("Not enough memory");
+        return NULL;
+    }
+
+#ifndef ENABLE_TENCENT_CLOUD
+    ret = HAL_Snprintf(topic_full,
+                       len,
+                       "/%s/%s/%s",
+                       topic,
+                       pdevice_info->product_key,
+                       pdevice_info->device_name);
+#else
+    ret = HAL_Snprintf(topic_full,
+                       len,
+                       "%s/%s/%s",
+                       pdevice_info->product_key,
+                       pdevice_info->device_name,
+                       topic);
+#endif
+    if (ret < 0) {
+        LITE_free(topic_full);
+        return NULL;
+    }
+
+    LITE_ASSERT(ret < len);
+
+    return topic_full;
 }

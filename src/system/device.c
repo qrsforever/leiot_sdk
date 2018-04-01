@@ -28,7 +28,6 @@ static int                  iotx_devinfo_inited = 0;
 
 int iotx_device_info_init(void)
 {
-
     if (iotx_devinfo_inited) {
         log_debug("device_info already created, return!");
         return 0;
@@ -76,3 +75,29 @@ iotx_conn_info_pt iotx_conn_info_get(void)
     return &iotx_conn_info;
 }
 
+#ifdef ENABLE_TENCENT_CLOUD
+#define MAX_CONN_ID_LEN (6)
+static char g_conn_id[MAX_CONN_ID_LEN];
+const char* iotx_get_next_conn_id() {
+    int i;
+    srand((unsigned)time(0));
+    for (i = 0; i < MAX_CONN_ID_LEN - 1; i++) {
+        int flag = rand() % 3;
+        switch(flag) {
+            case 0:
+                g_conn_id[i] = (rand() % 26) + 'a';
+                break;
+            case 1:
+                g_conn_id[i] = (rand() % 26) + 'A';
+                break;
+            case 2:
+                g_conn_id[i] = (rand() % 10) + '0';
+                break;
+        }
+    }
+
+    g_conn_id[MAX_CONN_ID_LEN - 1] = '\0';
+
+    return g_conn_id;
+}
+#endif

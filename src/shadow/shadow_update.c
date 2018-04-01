@@ -40,7 +40,7 @@ iotx_update_ack_wait_list_pt iotx_shadow_update_wait_ack_list_add(
             size_t token_len,
             iotx_push_cb_fpt cb,
             void *pcontext,
-            uint32_t timeout)
+            uint32_t timeout_ms)
 {
     int i;
     iotx_update_ack_wait_list_pt list = pshadow->inner_data.update_ack_wait_list;
@@ -71,7 +71,7 @@ iotx_update_ack_wait_list_pt iotx_shadow_update_wait_ack_list_add(
     list[i].token[token_len] = '\0';
 
     iotx_time_init(&list[i].timer);
-    utils_time_countdown_ms(&list[i].timer, timeout);
+    utils_time_countdown_ms(&list[i].timer, timeout_ms);
 
     log_debug("Add update ACK list");
 
@@ -119,21 +119,25 @@ void iotx_ds_update_wait_ack_list_handle_response(
             size_t json_doc_len)
 {
     int i;
-    const char *pdata, *ppayload, *pToken;
+    char *pdata, *ppayload, *pToken, *pdelta = NULL;
     iotx_update_ack_wait_list_pt pelement = pshadow->inner_data.update_ack_wait_list;
 
+#ifdef ENABLE_TENCENT_CLOUD
+    const char  *ptype;
+    int result_code = 0;
+#endif
+
     /* get token */
-    pdata = LITE_json_value_of("clientToken", (char *)json_doc);
-    if (NULL == pdata) {
+    pToken = LITE_json_value_of("clientToken", (char *)json_doc);
+    if (NULL == pToken) {
         log_warning("Invalid JSON document: not 'clientToken' key");
         return;
     }
-    pToken = pdata;
 
     ppayload = LITE_json_value_of("payload", (char *)json_doc);
     if (NULL == ppayload) {
         log_warning("Invalid JSON document: not 'payload' key");
-        LITE_free(pdata);
+        LITE_free(pToken);
         return;
     } else {
         log_debug("ppayload = %s", ppayload);
@@ -143,11 +147,12 @@ void iotx_ds_update_wait_ack_list_handle_response(
     for (i = 0; i < IOTX_DS_UPDATE_WAIT_ACK_LIST_NUM; ++i) {
         if (0 != pelement[i].flag_busy) {
             /* check the related */
-            if (0 == memcmp(pdata, pelement[i].token, strlen(pelement[i].token))) {
-                LITE_free(pdata);
+            if (0 == memcmp(pToken, pelement[i].token, strlen(pelement[i].token))) {
+                LITE_free(pToken);
                 HAL_MutexUnlock(pshadow->mutex);
                 log_debug("token=%s", pelement[i].token);
                 do {
+#ifndef ENABLE_TENCENT_CLOUD
                     pdata = LITE_json_value_of("status", (char *)ppayload);
                     if (NULL == pdata) {
                         log_warning("Invalid JSON document: not 'payload.status' key");
@@ -155,17 +160,18 @@ void iotx_ds_update_wait_ack_list_handle_response(
                     }
 
                     if (0 == strncmp(pdata, "success", strlen(pdata))) {
-                        char    *temp = NULL;
-
+                        LITE_free(pdata);
                         /* If have 'state' keyword in @json_shadow.payload, attribute value should be updated. */
-                        temp = LITE_json_value_of("state", (char *)ppayload);
-                        if (NULL != temp) {
-                            iotx_shadow_delta_entry(pshadow, json_doc, json_doc_len); /* update attribute */
-                            LITE_free(temp);
-                        }
-
-                        pelement[i].callback(pelement[i].pcontext, IOTX_SHADOW_ACK_SUCCESS, NULL, 0);
+                        pdelta = LITE_json_value_of("state", (char *)ppayload);
+                        /*
+                           if (NULL != pdelta) {
+                           iotx_shadow_delta_entry(pshadow, json_doc, json_doc_len);
+                           LITE_free(pdelta);
+                           }
+                           */
+                        pelement[i].callback(pelement[i].pcontext, IOTX_SHADOW_ACK_SUCCESS, pelement[i].token, strlen(pelement[i].token));
                     } else if (0 == strncmp(pdata, "error", strlen(pdata))) {
+                        LITE_free(pdata);
                         int ack_code;
 
                         pdata = LITE_json_value_of("content.errorcode", (char *)ppayload);
@@ -188,14 +194,72 @@ void iotx_ds_update_wait_ack_list_handle_response(
                         log_warning("Invalid JSON document: value of 'status' key is invalid.");
                         LITE_free(pdata);
                     }
-
+#else
+                    /* tencent (update or get)*/
+                    ptype = LITE_json_value_of("type", (char *)json_doc);
+                    if (NULL == ptype) {
+                        log_warning("Invalid JSON document: not 'type' key");
+                        break;
+                    }
+                    pdata = LITE_json_value_of("result", (char *)json_doc);
+                    if (NULL == pdata) {
+                        log_warning("Invalid JSON document: not 'result' key");
+                        LITE_free(ptype);
+                        break;
+                    }
+                    result_code = atoi(pdata);
                     LITE_free(pdata);
-                    LITE_free(ppayload);
-                } while (0);
 
+                    /* TODO */
+                    switch (result_code) {
+                    case 0:
+                        result_code = IOTX_SHADOW_ACK_SUCCESS;
+                        break;
+                    case 5003:
+                        result_code = IOTX_SHADOW_ACK_ERR_JSON_FMT_IS_INVALID;
+                        break;
+                    case 5004:
+                        result_code = IOTX_SHADOW_ACK_ERR_JSON_FMT_IS_INVALID;
+                        break;
+                    case 5005:
+                        result_code = IOTX_SHADOW_ACK_ERR_VERSION_IS_INVALID;
+                        break;
+                    case 5006:
+                        result_code = IOTX_SHADOW_ACK_ERR_JSON_FMT_IS_INVALID;
+                        break;
+                    case 5100:
+                        result_code = IOTX_SHADOW_ACK_ERR_SERVER_FAILED;
+                        break;
+                    }
+                    pelement[i].callback(pelement[i].pcontext, result_code, pelement[i].token, strlen(pelement[i].token));
+
+                    log_debug("type[%s] result[%d]\n", ptype, result_code);
+                    if ((strcmp(ptype, "get") == 0 && 0 == result_code) ||
+                        (strcmp(ptype, "update") && 0 != result_code)) {
+                        pdelta = LITE_json_value_of((char *)"payload.state.delta", (char *)json_doc);
+                        /* TODO Fatal BUG.
+                         * Indirectly call IOT_Shadow_Yield(), maybe modify pelement[i] or cause deadlock.
+                         * */
+                        /*
+                        if (NULL != pdelta) {
+                            iotx_shadow_delta_entry(pshadow, json_doc, json_doc_len);
+                            LITE_free(pdelta);
+                        }
+                        */
+                    }
+                    LITE_free(ptype);
+#endif
+                } while (0);
+                LITE_free(ppayload);
                 HAL_MutexLock(pshadow->mutex);
                 memset(&pelement[i], 0, sizeof(iotx_update_ack_wait_list_t));
                 HAL_MutexUnlock(pshadow->mutex);
+
+                /* Place here avoid the case of deadlock when call IOT_Shadow_Yield Indirectly */
+                if (NULL != pdelta) {
+                    iotx_shadow_delta_entry(pshadow, json_doc, json_doc_len);
+                    LITE_free(pdelta);
+                }
                 return;
             }
         }

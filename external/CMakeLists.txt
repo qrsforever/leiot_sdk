@@ -5,8 +5,9 @@ INCLUDE (DownloadCodes)
 IF (LEIOT_ENABLE_TLS)
     SET (TLS_GIT_DIR "mbedtls")
     SET (TLS_GIT_TAG "mbedtls-2.6.0")
-    SET (TLS_GIT_URL "git@github.com:ARMmbed/mbedtls.git")
-    LEIOT_GIT_CLONE (${TLS_GIT_DIR} ${TLS_GIT_TAG} ${TLS_GIT_URL} ${PROJECT_EXTERNAL_DIR})
+    SET (TLS_GIT_URL "https://github.com/ARMmbed/mbedtls")
+    # LEIOT_GIT_CLONE (${TLS_GIT_DIR} ${TLS_GIT_TAG} ${TLS_GIT_URL} ${PROJECT_EXTERNAL_DIR})
+    LEIOT_WGET_ARCHIVE (${TLS_GIT_DIR} ${TLS_GIT_TAG} ${TLS_GIT_URL} ${PROJECT_EXTERNAL_DIR})
 
     # LEIOT_FILTER_OUT (TLS_CFLAGS PLATFORM_CFLAGS "-ansi")
 
@@ -28,8 +29,9 @@ ENDIF (LEIOT_ENABLE_TLS)
 IF (LEIOT_ENABLE_MQTT)
     SET (MQTT_GIT_DIR "paho.mqtt.embedded-c")
     SET (MQTT_GIT_TAG "v1.1.0")
-    SET (MQTT_GIT_URL "git@github.com:eclipse/paho.mqtt.embedded-c.git")
-    LEIOT_GIT_CLONE ("${MQTT_GIT_DIR}" ${MQTT_GIT_TAG} ${MQTT_GIT_URL} ${PROJECT_EXTERNAL_DIR})
+    SET (MQTT_GIT_URL "https://github.com/eclipse/paho.mqtt.embedded-c")
+    # LEIOT_GIT_CLONE ("${MQTT_GIT_DIR}" ${MQTT_GIT_TAG} ${MQTT_GIT_URL} ${PROJECT_EXTERNAL_DIR})
+    LEIOT_WGET_ARCHIVE (${MQTT_GIT_DIR} ${MQTT_GIT_TAG} ${MQTT_GIT_URL} ${PROJECT_EXTERNAL_DIR})
 
     # LEIOT_FILTER_OUT (MQTT_CFLAGS PLATFORM_CFLAGS "-Werror")
 

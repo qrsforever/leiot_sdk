@@ -309,7 +309,9 @@ uintptr_t HAL_SSL_Establish(
             _IN_ const char *host,
             _IN_ uint16_t port,
             _IN_ const char *ca_crt,
-            _IN_ size_t ca_crt_len);
+            _IN_ size_t ca_crt_len,
+            _IN_ const char* cli_crt_file,
+            _IN_ const char* cli_key_file);
 
 
 /**

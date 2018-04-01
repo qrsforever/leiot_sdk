@@ -1,5 +1,0 @@
-# Config for Android NDK.
-
-LIST (APPEND PLATFORM_DEFINITIONS
-    "-DOS_ANDROID"
-    )

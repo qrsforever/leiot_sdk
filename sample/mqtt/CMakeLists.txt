@@ -1,4 +1,4 @@
-# sample/device-shadow/CMakeLists.txt
+# sample/mqtt/CMakeLists.txt
 
 SET (RRPC_SAMPLE_NAME mqtt_rrpc-example)
 

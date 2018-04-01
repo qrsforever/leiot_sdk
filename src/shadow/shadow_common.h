@@ -48,11 +48,17 @@ typedef struct iotx_inner_data_st {
     int32_t sync_status;
 } iotx_inner_data_t, *iotx_inner_data_pt;;
 
+typedef struct iotx_shadow_message_st {
+    char *ptopic_control;
+    char *ptopic_event;
+    iotx_shadow_message_cb_t callback;
+} iotx_shadow_message_t, *iotx_shadow_message_pt;
 
 typedef struct iotx_shadow_st {
     void *mqtt;
     void *mutex;
     iotx_inner_data_t inner_data;
+    iotx_shadow_message_t msg_data;
 } iotx_shadow_t, *iotx_shadow_pt;
 
 iotx_err_t iotx_ds_common_format_init(iotx_shadow_pt pshadow,
@@ -95,6 +101,8 @@ iotx_err_t iotx_ds_common_remove_attr(
             iotx_shadow_attr_pt pattr);
 
 char *iotx_ds_common_generate_topic_name(iotx_shadow_pt pshadow, const char *topic);
+
+char *iotx_ds_common_generate_message_topic_name(iotx_shadow_pt pshadow, const char *topic);
 
 int iotx_ds_common_publish2update(iotx_shadow_pt pshadow, char *data, uint32_t data_len);
 

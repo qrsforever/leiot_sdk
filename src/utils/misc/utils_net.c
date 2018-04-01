@@ -102,11 +102,22 @@ static int connect_ssl(utils_network_pt pNetwork)
         return 1;
     }
 
+#ifndef ENABLE_TENCENT_CLOUD
     if (0 != (pNetwork->handle = (intptr_t)HAL_SSL_Establish(
                                      pNetwork->pHostAddress,
                                      pNetwork->port,
                                      pNetwork->ca_crt,
-                                     pNetwork->ca_crt_len + 1))) {
+                                     pNetwork->ca_crt_len + 1,
+                                     0, 0))) {
+#else
+    if (0 != (pNetwork->handle = (intptr_t)HAL_SSL_Establish(
+                                     pNetwork->pHostAddress,
+                                     pNetwork->port,
+                                     pNetwork->ca_crt,
+                                     pNetwork->ca_crt_len + 1,
+                                     pNetwork->cert_file,
+                                     pNetwork->key_file))) {
+#endif
         return 0;
     } else {
         /* TODO SHOLUD not remove this handle space */

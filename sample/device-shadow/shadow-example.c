@@ -21,13 +21,24 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
+#include <unistd.h>
 
 #include "iot_import.h"
 #include "iot_export.h"
 
-#define PRODUCT_KEY             "9RrZXcGctqe"
-#define DEVICE_NAME             "air-1"
-#define DEVICE_SECRET           "h9JVOI27YjzvJwhNjKzbzXwuuHQdLFtE"
+#ifdef ENABLE_TENCENT_CLOUD
+#define PRODUCT_KEY             "38GBCH2FO2"
+#define DEVICE_NAME             "testshadow"
+#define DEVICE_SECRET           "123456"
+#define QCLOUD_IOT_CERT_FILENAME          "testshadow_cert.crt"
+#define QCLOUD_IOT_KEY_FILENAME           "testshadow_private.key"
+static char sg_cert_file[128];
+static char sg_key_file[128];
+#else
+#define PRODUCT_KEY             "6nsLZYMc3St"
+#define DEVICE_NAME             "door-1"
+#define DEVICE_SECRET           "cWshia4TlZ2TtYSucFyfV6EfA8R6SxOE"
+#endif
 
 #define SHADOW_MQTT_MSGLEN      (1024)
 
@@ -59,6 +70,10 @@ static void _device_shadow_cb_light(iotx_shadow_attr_pt pattr)
     SHADOW_TRACE("----");
 }
 
+static void _device_shadow_control_cb(void* handle, const char *data, size_t data_len)
+{
+    SHADOW_TRACE("data[%s]", data);
+}
 
 /* Device shadow demo entry */
 int demo_device_shadow(char *msg_buf, char *msg_readbuf)
@@ -78,6 +93,19 @@ int demo_device_shadow(char *msg_buf, char *msg_readbuf)
 
     /* Construct a device shadow */
     memset(&shadow_para, 0, sizeof(iotx_shadow_para_t));
+
+#ifdef ENABLE_TENCENT_CLOUD
+    char current_path[256];
+    char *cwd = getcwd(current_path, sizeof(current_path));
+    if (cwd == NULL) {
+        SHADOW_TRACE("getcwd return NULL");
+        return -1;
+    }
+    sprintf(sg_cert_file, "%s/certs/%s", current_path, QCLOUD_IOT_CERT_FILENAME);
+    sprintf(sg_key_file, "%s/certs/%s", current_path, QCLOUD_IOT_KEY_FILENAME);
+    shadow_para.mqtt.cert_file = sg_cert_file;
+    shadow_para.mqtt.key_file = sg_key_file;
+#endif
 
     shadow_para.mqtt.port = puser_info->port;
     shadow_para.mqtt.host = puser_info->host_name;
@@ -133,25 +161,33 @@ int demo_device_shadow(char *msg_buf, char *msg_readbuf)
     IOT_Shadow_RegisterAttribute(h_shadow, &attr_light);
     IOT_Shadow_RegisterAttribute(h_shadow, &attr_temperature);
 
+    IOT_Shadow_Control_Register(h_shadow, _device_shadow_control_cb);
 
     /* synchronize the device shadow with device shadow cloud */
     IOT_Shadow_Pull(h_shadow);
 
+    int i = 0;
+    int ret = 0;
+    int report_flag = 1;
     do {
-        format_data_t format;
+        if (report_flag || (i % 11) == 0) {
+            format_data_t format;
+            /* Format the attribute data */
+            IOT_Shadow_PushFormat_Init(h_shadow, &format, buf, 1024);
+            IOT_Shadow_PushFormat_Add(h_shadow, &format, &attr_temperature);
+            IOT_Shadow_PushFormat_Add(h_shadow, &format, &attr_light);
+            IOT_Shadow_PushFormat_Finalize(h_shadow, &format);
 
-        /* Format the attribute data */
-        IOT_Shadow_PushFormat_Init(h_shadow, &format, buf, 1024);
-        IOT_Shadow_PushFormat_Add(h_shadow, &format, &attr_temperature);
-        IOT_Shadow_PushFormat_Add(h_shadow, &format, &attr_light);
-        IOT_Shadow_PushFormat_Finalize(h_shadow, &format);
+            /* Update attribute data */
+            ret = IOT_Shadow_Push(h_shadow, format.buf, format.offset, 10);
+            if (ret == SUCCESS_RETURN) {
+                report_flag = 0;
+            }
+        }
+        i++;
 
-        /* Update attribute data */
-        IOT_Shadow_Push(h_shadow, format.buf, format.offset, 10);
+        IOT_Shadow_Yield(h_shadow, 200);
 
-        /* Sleep 1000 ms */
-        HAL_SleepMs(2000);
-        /* IOT_Shadow_Yield(h_shadow, 200); */
     } while (1);
 
 
@@ -172,7 +208,7 @@ int main()
 
     char *msg_buf = (char *)HAL_Malloc(SHADOW_MQTT_MSGLEN);
     char *msg_readbuf = (char *)HAL_Malloc(SHADOW_MQTT_MSGLEN);
-    
+
     demo_device_shadow(msg_buf, msg_readbuf);
 
     HAL_Free(msg_buf);

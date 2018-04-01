@@ -42,7 +42,7 @@
 
 /* TODO lidong add */
 #define MQTT_CPT_RESERVED 0
-#define KEEP_ALIVE_INTERVAL_DEFAULT_MAX 180 
+#define KEEP_ALIVE_INTERVAL_DEFAULT_MAX 180
 #define KEEP_ALIVE_INTERVAL_DEFAULT_MIN 60
 
 static int iotx_mc_send_packet(iotx_mc_client_t *c, char *buf, int length, iotx_time_t *timer);
@@ -105,9 +105,15 @@ static int iotx_mc_check_topic(const char *topicName, iotx_mc_topic_type_t type)
     char *delim = "/";
     char *iterm = NULL;
     char topicString[IOTX_MC_TOPIC_NAME_MAX_LEN];
+#ifndef ENABLE_TENCENT_CLOUD
     if (NULL == topicName || '/' != topicName[0]) {
         return FAIL_RETURN;
     }
+#else
+    if (NULL == topicName) {
+        return FAIL_RETURN;
+    }
+#endif
 
     if (strlen(topicName) > IOTX_MC_TOPIC_NAME_MAX_LEN) {
         log_err("len of topicName exceeds 64");
@@ -1093,6 +1099,12 @@ static int iotx_mc_handle_recv_PUBLISH(iotx_mc_client_t *c)
     topic_msg.qos = (unsigned char)qos;
     topic_msg.payload_len = (unsigned short)payload_len;
 
+    /* LEIOT: bug fix 2018-02-28 for dirty memory used */
+    int size = topic_msg.payload - c->buf_read + topic_msg.payload_len;
+    if (size < c->buf_size_read) {
+        c->buf_read[size] = 0;
+    }
+
     /* payload decrypt by id2_aes */
     if (c->mqtt_down_process) {
         c->mqtt_down_process(&topic_msg);
@@ -1689,6 +1701,10 @@ static int iotx_mc_init(iotx_mc_client_t *pClient, iotx_mqtt_param_t *pInitParam
     }
     memset(pClient->ipstack, 0x0, sizeof(utils_network_t));
 
+#ifdef ENABLE_TENCENT_CLOUD
+    pClient->ipstack->cert_file = pInitParams->cert_file;
+    pClient->ipstack->key_file = pInitParams->key_file;
+#endif
     rc = iotx_net_init(pClient->ipstack, pInitParams->host, pInitParams->port, pInitParams->pub_key);
     if (SUCCESS_RETURN != rc) {
         mc_state = IOTX_MC_STATE_INVALID;
@@ -2349,6 +2365,7 @@ void *IOT_MQTT_Construct(iotx_mqtt_param_t *pInitParams)
     }
     pclient->mqtt_auth = iotx_guider_authenticate;
 
+#ifndef ENABLE_TENCENT_CLOUD
     /* report module id */
     err = iotx_mc_report_mid(pclient);
     if (SUCCESS_RETURN != err) {
@@ -2356,6 +2373,7 @@ void *IOT_MQTT_Construct(iotx_mqtt_param_t *pInitParams)
         LITE_free(pclient);
         return NULL;
     }
+#endif
 
     return pclient;
 }

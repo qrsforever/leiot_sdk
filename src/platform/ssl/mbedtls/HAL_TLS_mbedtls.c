@@ -152,9 +152,8 @@ static int _ssl_client_init(mbedtls_ssl_context *ssl,
                             mbedtls_net_context *tcp_fd,
                             mbedtls_ssl_config *conf,
                             mbedtls_x509_crt *crt509_ca, const char *ca_crt, size_t ca_len,
-                            mbedtls_x509_crt *crt509_cli, const char *cli_crt, size_t cli_len,
-                            mbedtls_pk_context *pk_cli, const char *cli_key, size_t key_len,  const char *cli_pwd, size_t pwd_len
-                           )
+                            mbedtls_x509_crt *crt509_cli, const char *cli_crt_file,
+                            mbedtls_pk_context *pk_cli, const char *cli_key_file)
 {
     int ret = -1;
 
@@ -190,10 +189,11 @@ static int _ssl_client_init(mbedtls_ssl_context *ssl,
     mbedtls_x509_crt_init(crt509_cli);
     mbedtls_pk_init(pk_cli);
 #endif
-    if (cli_crt != NULL && cli_key != NULL) {
+
+    if (cli_crt_file != NULL && cli_key_file != NULL) {
 #if defined(MBEDTLS_CERTS_C)
-        SSL_LOG("start prepare client cert .");
-        ret = mbedtls_x509_crt_parse(crt509_cli, (const unsigned char *) cli_crt, cli_len);
+        SSL_LOG("start prepare client cert[%s]",  cli_crt_file);
+        ret = mbedtls_x509_crt_parse_file(crt509_cli, (const char *)cli_crt_file);
 #else
         {
             ret = 1;
@@ -206,8 +206,8 @@ static int _ssl_client_init(mbedtls_ssl_context *ssl,
         }
 
 #if defined(MBEDTLS_CERTS_C)
-        SSL_LOG("start mbedtls_pk_parse_key[%s]", cli_pwd);
-        ret = mbedtls_pk_parse_key(pk_cli, (const unsigned char *) cli_key, key_len, (const unsigned char *) cli_pwd, pwd_len);
+        SSL_LOG("start mbedtls_pk_parse_key[%s]", cli_key_file);
+        ret = mbedtls_pk_parse_keyfile(pk_cli, (const char *)cli_key_file, "");
 #else
         {
             ret = 1;
@@ -313,20 +313,15 @@ static int mbedtls_net_connect_timeout(mbedtls_net_context *ctx, const char *hos
  * @param[in] port is the Server Port.
  * @param[in] ca_crt is the Server's CA certification.
  * @param[in] ca_crt_len is the length of Server's CA certification.
- * @param[in] client_crt is the client certification.
- * @param[in] client_crt_len is the length of client certification.
- * @param[in] client_key is the client key.
- * @param[in] client_key_len is the length of client key.
- * @param[in] client_pwd is the password of client key.
- * @param[in] client_pwd_len is the length of client key's password.
+ * @param[in] client_crt_file is the client certification.
+ * @param[in] client_key_file is the client key.
  * @sa #NewNetwork();
  * @return If the return value is 0, the connection is created successfully. If the return value is -1, then calling lwIP #socket() has failed. If the return value is -2, then calling lwIP #connect() has failed. Any other value indicates that calling lwIP #getaddrinfo() has failed.
  */
 static int _TLSConnectNetwork(TLSDataParams_t *pTlsData, const char *addr, const char *port,
                               const char *ca_crt, size_t ca_crt_len,
-                              const char *client_crt,   size_t client_crt_len,
-                              const char *client_key,   size_t client_key_len,
-                              const char *client_pwd, size_t client_pwd_len)
+                              const char *client_crt_file,
+                              const char *client_key_file)
 {
     int ret = -1;
     /*
@@ -334,8 +329,8 @@ static int _TLSConnectNetwork(TLSDataParams_t *pTlsData, const char *addr, const
      */
     if (0 != (ret = _ssl_client_init(&(pTlsData->ssl), &(pTlsData->fd), &(pTlsData->conf),
                                      &(pTlsData->cacertl), ca_crt, ca_crt_len,
-                                     &(pTlsData->clicert), client_crt, client_crt_len,
-                                     &(pTlsData->pkey), client_key, client_key_len, client_pwd, client_pwd_len))) {
+                                     &(pTlsData->clicert), client_crt_file,
+                                     &(pTlsData->pkey), client_key_file))) {
         SSL_LOG(" failed ! ssl_client_init returned -0x%04x", -ret);
         return ret;
     }
@@ -540,7 +535,10 @@ int32_t HAL_SSL_Destroy(uintptr_t handle)
 uintptr_t HAL_SSL_Establish(const char *host,
                             uint16_t port,
                             const char *ca_crt,
-                            size_t ca_crt_len)
+                            size_t ca_crt_len,
+                            const char* cli_crt_file,
+                            const char* cli_key_file
+                            )
 {
     char port_str[6];
     TLSDataParams_pt pTlsData;
@@ -553,10 +551,10 @@ uintptr_t HAL_SSL_Establish(const char *host,
 
     sprintf(port_str, "%u", port);
 
-    if (0 != _TLSConnectNetwork(pTlsData, host, port_str, ca_crt, ca_crt_len, NULL, 0, NULL, 0, NULL, 0)) {
+    if (0 != _TLSConnectNetwork(pTlsData, host, port_str, ca_crt, ca_crt_len, cli_crt_file, cli_key_file)) {
         _network_ssl_disconnect(pTlsData);
         HAL_Free((void *)pTlsData);
-        return (uintptr_t)NULL; 
+        return (uintptr_t)NULL;
     }
 
     return (uintptr_t)pTlsData;

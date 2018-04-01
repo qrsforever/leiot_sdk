@@ -151,6 +151,11 @@ typedef struct {
      *   @pub_key point to the CA certification */
     const char                 *pub_key;
 
+#ifdef ENABLE_TENCENT_CLOUD
+    const char *cert_file;
+    const char *key_file;
+#endif
+
     uint8_t                     clean_session;            /* Specify MQTT clean session or not*/
     uint32_t                    request_timeout_ms;       /* Specify timeout of a MQTT request in millisecond */
     uint32_t                    keepalive_interval_ms;    /* Specify MQTT keep-alive interval in millisecond */

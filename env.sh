@@ -1,22 +1,23 @@
 #!/bin/bash
 
-# toolchains
-# export PATH=/opt/ndk/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin:$PATH
-# export CROSS_PREFIX=arm-linux-androideabi-
+# toolchains or ndk path for android
+# export PATH=/opt/ndk:$PATH
 
 # debug: ON / OFF (default: OFF)
 export ENABLE_DEBUG=ON
 
-# os platform: Android/Linux/FreeRTOS (default: Linux)
-export OS_PLATFORM=Linux
+# os platform: android/ubuntu/FreeRTOS (default: ubuntu)
+export OS_PLATFORM=ubuntu
 
-# device type: Gateway/Subdev/MiniControl (default: Subdev)
-export DEVICE_TYPE=Gateway
+# loal cloud for debug
+# ali, tencent, local
+export CLOUD_SERVER="tencent"
 
-# build libraries type: ON/OFF (default: ON)
-export ENABLE_STATIC=ON
+# export LOCAL_CLOUD_HOST=10.58.51.144
+# export LOCAL_CLOUD_PORT=1883
 
 # Build:
+#   0. source env.sh
 #   1. mkdir output
 #   2. cd output
 #   3. cmake ..

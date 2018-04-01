@@ -33,6 +33,7 @@ typedef enum {
     IOTX_SHADOW_ACK_ERR_METHOD_IS_INVALID = 406,
     IOTX_SHADOW_ACK_ERR_SHADOW_DOCUMENT_IS_NULL = 407,
     IOTX_SHADOW_ACK_ERR_ATTRIBUTE_EXCEEDED = 408,
+    IOTX_SHADOW_ACK_ERR_VERSION_IS_CONFLICT = 409,
     IOTX_SHADOW_ACK_ERR_SERVER_FAILED = 500,
 } iotx_shadow_ack_code_t;
 
@@ -81,6 +82,8 @@ typedef struct iotx_shadow_attr_st {
 typedef struct {
     iotx_mqtt_param_t mqtt;
 } iotx_shadow_para_t, *iotx_shadow_para_pt;
+
+typedef void (*iotx_shadow_message_cb_t)(void* handle, const char *data, size_t data_len);
 
 /** @defgroup group_api api
  *  @{
@@ -221,7 +224,7 @@ int IOT_Shadow_Push_Async(
             void *handle,
             char *data,
             size_t data_len,
-            uint16_t timeout_s,
+            uint16_t timeout_ms,
             iotx_push_cb_fpt cb_fpt,
             void *pcontext);
 
@@ -234,6 +237,36 @@ int IOT_Shadow_Push_Async(
  * @see None.
  */
 iotx_err_t IOT_Shadow_Pull(void *handle);
+
+/**
+ * @brief update desired null data to cloud.
+ * @param [in] handle: The handle of device shaodw.
+ * @retval SUCCESS_RETURN : Success.
+ * @retval          other : See iotx_err_t.
+ * @see None.
+ */
+iotx_err_t IOT_Shadow_Desired_Null(void *handle);
+
+/**
+ * @Brief  Register the control callback
+ *
+ * @Param [in] handle: The handle of device shadow
+ * @Param [in] callback:
+ *
+ * @Returns
+ */
+iotx_err_t IOT_Shadow_Control_Register(void* handle, iotx_shadow_message_cb_t callback);
+
+/**
+ * @Brief  Report the event message from device.
+ *
+ * @Param [in] handle: The handle of device shadow.
+ * @Param [in] data: The message data which device report cloud server.
+ * @Param [in] data_len: The length of the message data.
+ *
+ * @Returns  0: success <0: fail
+ */
+iotx_err_t IOT_Shadow_Event_Report(void* handle, char *data, size_t data_len);
 
 /* From shadow.h */
 

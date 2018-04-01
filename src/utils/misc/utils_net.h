@@ -40,6 +40,11 @@ struct utils_network {
     /**< NULL, TCP connection; NOT NULL, SSL connection */
     const char *ca_crt;
 
+#ifdef ENABLE_TENCENT_CLOUD
+    const char *cert_file;
+    const char *key_file;
+#endif
+
     /**< connection handle: 0, NOT connection; NOT 0, handle of the connection */
     uintptr_t handle;
 

@@ -526,6 +526,9 @@ int iotx_guider_authenticate(void)
     conn->pub_key = iotx_ca_get();
 
 #ifdef MQTT_DIRECT
+#ifndef ENABLE_LOCAL_CLOUD
+#ifndef ENABLE_TENCENT_CLOUD
+    /* ali */
     conn->port = 1883;
     _fill_conn_string(conn->host_name, sizeof(conn->host_name),
                       "%s.%s",
@@ -538,6 +541,37 @@ int iotx_guider_authenticate(void)
     _fill_conn_string(conn->password, sizeof(conn->password),
                       "%s",
                       guider_sign);
+#else
+    /* tencent */
+    conn->port = 8883;
+    _fill_conn_string(conn->host_name, sizeof(conn->host_name),
+                      "%s",
+                      GUIDER_DIRECT_DOMAIN);
+    _fill_conn_string(conn->username, sizeof(conn->username),
+                      "%s%s;%s;%s",
+                      dev->device_name,
+                      dev->product_key,
+                      QCLOUD_IOT_DEVICE_SDK_APPID,
+                      iotx_get_next_conn_id()
+                      );
+    _fill_conn_string(conn->password, sizeof(conn->password),
+                      "%s",
+                      "123456");
+#endif
+#else
+    /* local */
+    conn->port = LOCAL_CLOUD_PORT;
+    _fill_conn_string(conn->host_name, sizeof(conn->host_name),
+                      "%s",
+                      LOCAL_CLOUD_HOST);
+    _fill_conn_string(conn->username, sizeof(conn->username),
+                      "%s&%s",
+                      dev->product_key
+                      dev->device_name);
+    _fill_conn_string(conn->password, sizeof(conn->password),
+                      "%s",
+                      "123456");
+#endif  /* ENABLE_LOCAL_CLOUD */
 
 #else   /* MQTT_DIRECT */
 
@@ -554,6 +588,7 @@ int iotx_guider_authenticate(void)
     gw = 1;
 #endif
 
+#ifndef ENABLE_TENCENT_CLOUD
     _fill_conn_string(conn->client_id, sizeof(conn->client_id),
                       "%s"
                       "|securemode=%d"
@@ -572,6 +607,14 @@ int iotx_guider_authenticate(void)
                       , partner_id
                       , module_id
                      );
+#else
+    /* tencent */
+    _fill_conn_string(conn->client_id, sizeof(conn->client_id),
+                      "%s%s",
+                      dev->product_key,
+                      dev->device_name
+        );
+#endif
 
     guider_print_conn_info(conn);
 

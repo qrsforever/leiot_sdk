@@ -25,32 +25,6 @@
 #include "utils_list.h"
 #include "shadow_delta.h"
 
-static int iotx_shadow_delta_response(iotx_shadow_pt pshadow)
-{
-#define IOTX_SHADOW_DELTA_RESPONSE_LEN     (256)
-
-    int rc;
-    void *buf;
-    format_data_t format;
-
-    buf = LITE_malloc(IOTX_SHADOW_DELTA_RESPONSE_LEN);
-    if (NULL == buf) {
-        return ERROR_NO_MEM;
-    }
-
-    iotx_ds_common_format_init(pshadow, &format, buf, IOTX_SHADOW_DELTA_RESPONSE_LEN, "update",
-                               "\"state\":{\"desired\":\"null\"");
-    iotx_ds_common_format_finalize(pshadow, &format, "}");
-
-    rc = iotx_ds_common_publish2update(pshadow, format.buf, format.offset);
-
-    LITE_free(buf);
-
-    return (rc >= 0) ? SUCCESS_RETURN : rc;
-}
-
-
-
 static uint32_t iotx_shadow_get_timestamp(const char *pmetadata_desired,
         size_t len_metadata_desired,
         const char *pname)
@@ -134,7 +108,6 @@ static void iotx_shadow_delta_update_attr(iotx_shadow_pt pshadow,
     HAL_MutexUnlock(pshadow->mutex);
 }
 
-/* handle response ACK of UPDATE */
 void iotx_shadow_delta_entry(
             iotx_shadow_pt pshadow,
             const char *json_doc,
@@ -143,14 +116,31 @@ void iotx_shadow_delta_entry(
     const char *key_metadata;
     const char *pstate, *pmetadata;
 
-    pstate = LITE_json_value_of((char *)"payload.state.desired", (char *)json_doc);
-    if (NULL != pstate) {
-        key_metadata = "payload.metadata.desired";
+#ifdef ENABLE_TENCENT_CLOUD
+    const char *pname;
+    pname = LITE_json_value_of((char *)"type", (char *)json_doc);
+    if ((strlen("delta") == strlen(pname)) && !strcmp(pname, "delta")) {
+        pstate = LITE_json_value_of((char *)"payload.state", (char *)json_doc);
+        key_metadata = "payload.metadata";
     } else {
-        /* if have not desired key, get reported key instead. */
-        key_metadata = "payload.metadata.reported";
-        pstate = LITE_json_value_of((char *)"payload.state.reported", (char *)json_doc);
+        pstate = LITE_json_value_of((char *)"payload.state.delta", (char *)json_doc);
+        if (NULL != pstate) {
+            key_metadata = "payload.metadata.delta";
+        } else {
+#endif
+            pstate = LITE_json_value_of((char *)"payload.state.desired", (char *)json_doc);
+            if (NULL != pstate) {
+                key_metadata = "payload.metadata.desired";
+            } else {
+                /* if have not desired key, get reported key instead. */
+                pstate = LITE_json_value_of((char *)"payload.state.reported", (char *)json_doc);
+                key_metadata = "payload.metadata.reported";
+            }
+#ifdef ENABLE_TENCENT_CLOUD
+        }
     }
+    LITE_free(pname);
+#endif
 
     pmetadata = LITE_json_value_of((char *)key_metadata, (char *)json_doc);
 
@@ -169,6 +159,6 @@ void iotx_shadow_delta_entry(
     LITE_free(pmetadata);
 
     /* generate ACK and publish to @update topic using QOS1 */
-    iotx_shadow_delta_response(pshadow);
+    IOT_Shadow_Desired_Null(pshadow);
 }
 

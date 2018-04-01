@@ -93,7 +93,7 @@ void LITE_syslog(const char *f, const int l, const int level, const char *fmt, .
         return;
     }
 
-    LITE_printf(LOG_PREFIX_FMT, lvl_names[level], f, l);
+    LITE_printf("%-9u "LOG_PREFIX_FMT, HAL_UptimeMs()/1000, lvl_names[level], f, l);
 
     memset(tmpbuf, 0, sizeof(logcb.text_buf));
     va_start(ap, fmt);

@@ -50,7 +50,12 @@
 #define GUIDER_DEVCODE_LEN          (256)
 #define GUIDER_URLENCODE_LEN        (256)
 
+#ifndef ENABLE_TENCENT_CLOUD
 #define GUIDER_DIRECT_DOMAIN        "iot-as-mqtt.cn-shanghai.aliyuncs.com"
+#else
+#define GUIDER_DIRECT_DOMAIN        "iotcloud-mqtt.gz.tencentdevices.com"
+#define QCLOUD_IOT_DEVICE_SDK_APPID "12010126"
+#endif
 
 #define SHA_METHOD              "hmacsha1"
 #define MD5_METHOD              "hmacmd5"

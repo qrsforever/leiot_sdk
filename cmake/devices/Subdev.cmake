@@ -1,5 +1,0 @@
-# Setup Subdev
-
-LIST (APPEND DEVICE_DEFINITIONS 
-    "-DDEV_SUBDEV"
-    )
